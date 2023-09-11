@@ -53,8 +53,8 @@ public class UniversidadGrupo79 {
    //    m.modificarMateria(fisica);
   //      m.actualizarMateria(5);
   
- //       Materia materiaEncontrada = m.buscarMateria(5);
-  //      System.out.println(materiaEncontrada.toString());
+       Materia materiaEncontrada = m.buscarMateria(5);
+       System.out.println(materiaEncontrada.toString());
   
         for(Materia aux: m.listarMateria()){
             System.out.println(aux.toString());
