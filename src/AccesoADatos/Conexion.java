@@ -22,8 +22,8 @@ public class Conexion {
     private static final String bdd = "universidadulp";
     private static final String usuario = "root";
     private static final String clave = "";
-    
     private static Connection connection;
+    
     private Conexion(){}
     
     public static Connection getConexion(){

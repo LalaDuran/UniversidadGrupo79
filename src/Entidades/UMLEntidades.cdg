@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ClassDiagram name="Grupo79">
+  <ClassDiagramComponents>
+    <Class name="Alumno" package="" visibility="public" xPosition="10.0" yPosition="40.0">
+      <Fields>
+        <Field name="idAlumno" type="int" visibility="private"/>
+        <Field name="dni" type="int" visibility="private"/>
+        <Field name="apellido" type="String" visibility="private"/>
+        <Field name="nombre" type="String" visibility="private"/>
+        <Field name="fechaNacim" type="LocalDate" visibility="private"/>
+        <Field name="activo" type="boolean" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="int" name="idAlumno"/>
+          <Argument type="int" name="dni"/>
+          <Argument type="String" name="apellido"/>
+          <Argument type="String" name="nombre"/>
+          <Argument type="LocalDate" name="fechaNacim"/>
+          <Argument type="boolean" name="activo"/>
+        </Constructor>
+        <Constructor visibility="public">
+          <Argument type="int" name="dni"/>
+          <Argument type="String" name="apellido"/>
+          <Argument type="String" name="nombre"/>
+          <Argument type="LocalDate" name="fechaNacim"/>
+          <Argument type="boolean" name="activo"/>
+        </Constructor>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="getterYSetters" returnType="void" visibility="public"/>
+        <Method name="toString" returnType="String" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="Inscripcion" package="" visibility="public" xPosition="270.0" yPosition="157.0">
+      <Fields>
+        <Field name="idInscripcion" type="int" visibility="private"/>
+        <Field name="nota" type="double" visibility="private"/>
+        <Field name="alumnno" type="Alumno" visibility="private"/>
+        <Field name="materia" type="Materia" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="int" name="idInscripcion"/>
+          <Argument type="double" name="nota"/>
+          <Argument type="Alumno" name="alumno"/>
+          <Argument type="Materia" name="materia"/>
+        </Constructor>
+        <Constructor visibility="public">
+          <Argument type="double" name="nota"/>
+          <Argument type="Alumno" name="alumno"/>
+          <Argument type="Materia" name="materia"/>
+        </Constructor>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="getterYSetter" returnType="void" visibility="public"/>
+        <Method name="toString" returnType="String" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="Materia" package="" visibility="public" xPosition="532.0" yPosition="40.0">
+      <Fields>
+        <Field name="idMateria" type="int" visibility="private"/>
+        <Field name="nombre" type="String" visibility="private"/>
+        <Field name="anio" type="int" visibility="private"/>
+        <Field name="activo" type="boolean" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="int" name="idMateria"/>
+          <Argument type="String" name="nombre"/>
+          <Argument type="int" name="anio"/>
+          <Argument type="boolean" name="activo"/>
+        </Constructor>
+        <Constructor visibility="public">
+          <Argument type="String" name="nombre"/>
+          <Argument type="int" name="anio"/>
+          <Argument type="boolean" name="activo"/>
+        </Constructor>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="getterYSetter" returnType="void" visibility="public"/>
+        <Method name="toString" returnType="String" visibility="public"/>
+      </Methods>
+    </Class>
+  </ClassDiagramComponents>
+  <ClassDiagramRelations>
+    <HasRelation name="materia" source="Inscripcion" target="Materia" type="Aggregation" sourceCardinality="0..1" targetCardinality="1..1"/>
+    <HasRelation name="alumno" source="Inscripcion" target="Alumno" type="Aggregation" sourceCardinality="0..1" targetCardinality="1..1"/>
+  </ClassDiagramRelations>
+</ClassDiagram>
