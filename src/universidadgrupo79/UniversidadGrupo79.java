@@ -72,10 +72,27 @@ public class UniversidadGrupo79 {
 //        i.setNota(8.5);
 //        
 //        insc.guardarInscripcion(i);
-        insc.obtenerInscripciones();
-        for(Inscripcion aux: insc.obtenerInscripciones()){
-            System.out.println(aux.toString());
-        }
+//        insc.obtenerInscripciones();
+//        for(Inscripcion aux: insc.obtenerInscripciones()){
+//            System.out.println(aux.toString());
+//        }
+
+
+//        insc.actualizarNota(10, 5, 4.2);
+//        insc.borrarInscripcionMateriaAlumno(10, 5);
+        
+//            
+//          for(Materia aux: insc.obtenerMateriasCursadas(1)){
+//              System.out.println(aux.getNombre());
+//          }
+//          
+//          for(Materia aux: insc.obtenerMateriasNoCursadas(1)){
+//              System.out.println(aux.getNombre());
+//          }
+          
+          for(Alumno aux: insc.obtenerAlumnosPorMateria(3)){
+              System.out.println(aux.toString());
+          }
     }
     
 }
