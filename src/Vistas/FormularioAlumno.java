@@ -5,6 +5,13 @@
  */
 package Vistas;
 
+import AccesoADatos.AlumnoData;
+import Entidades.Alumno;
+import com.toedter.calendar.JDateChooser;
+import java.util.Date;
+import java.time.LocalDate;
+import java.time.ZoneId;
+
 /**
  *
  * @author morena
@@ -18,6 +25,7 @@ public class FormularioAlumno extends javax.swing.JInternalFrame {
         initComponents();
     }
 
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -61,14 +69,39 @@ public class FormularioAlumno extends javax.swing.JInternalFrame {
         jLabel6.setText("Formulario de Alumno");
 
         jbBuscar.setText("Buscar");
+        jbBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbBuscarActionPerformed(evt);
+            }
+        });
 
         jbNuevo.setText("Nuevo");
+        jbNuevo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbNuevoActionPerformed(evt);
+            }
+        });
 
         jbEliminar.setText("Eliminar");
+        jbEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbEliminarActionPerformed(evt);
+            }
+        });
 
         jbGuardar.setText("Guardar");
+        jbGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbGuardarActionPerformed(evt);
+            }
+        });
 
         jbSalir.setText("Salir");
+        jbSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbSalirActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -150,6 +183,85 @@ public class FormularioAlumno extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jbBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbBuscarActionPerformed
+        
+        AlumnoData ad = new AlumnoData();
+        
+        int dni = Integer.parseInt(jtfDocumento.getText());
+        jtfApellido.setText(ad.buscarAlumnoPorDni(dni).getApellido());
+        jtfNombre.setText(ad.buscarAlumnoPorDni(dni).getNombre());
+        
+        LocalDate localDate = LocalDate.of(ad.buscarAlumnoPorDni(dni).getFechaNacim().getYear(),ad.buscarAlumnoPorDni(dni).getFechaNacim().getMonth(),ad.buscarAlumnoPorDni(dni).getFechaNacim().getDayOfMonth());
+
+        // Paso 2: Convertir el LocalDate a Date
+        Date date = java.sql.Date.valueOf(localDate);
+
+        // Paso 3: Crear un JDateChooser y establecer la fecha
+        
+        jdcFechaNac.setDate(date);
+   
+        if(ad.buscarAlumnoPorDni(dni).isActivo() == true){
+            jrbEstado.setSelected(true);
+        } else {
+            jrbEstado.setSelected(false);
+        }
+
+    }//GEN-LAST:event_jbBuscarActionPerformed
+
+    private void jbNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbNuevoActionPerformed
+
+        jtfApellido.setText(" ");
+        jtfNombre.setText(" ");
+        jtfDocumento.setText(" ");
+        jrbEstado.setSelected(false);
+        jdcFechaNac.setCalendar(null);
+        
+    }//GEN-LAST:event_jbNuevoActionPerformed
+
+    private void jbEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEliminarActionPerformed
+        
+        Alumno a = new Alumno();
+        AlumnoData ad = new AlumnoData();
+        int dni = Integer.parseInt(jtfDocumento.getText());
+        
+       
+        a=ad.buscarAlumnoPorDni(dni);
+        ad.eliminarAlumno(a.getIdAlumno());
+       
+    }//GEN-LAST:event_jbEliminarActionPerformed
+
+    private void jbGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbGuardarActionPerformed
+        AlumnoData ad = new AlumnoData();
+        Alumno a = new Alumno();
+        
+        
+        
+        a.setApellido(jtfApellido.getText());
+        a.setActivo(jrbEstado.isSelected());
+        a.setNombre(jtfNombre.getText());
+        a.setDni(Integer.parseInt(jtfDocumento.getText()));
+        
+        Date date = jdcFechaNac.getDate();
+        a.setFechaNacim(date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+        
+        
+       
+        ad.guardarAlumno(a);
+//        if(ad.buscarAlumnoPorDni(a.getDni()) == null){
+//             
+//        } else {
+//            ad.modificarAlumno(a);
+//        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jbGuardarActionPerformed
+
+    private void jbSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSalirActionPerformed
+        
+        this.setVisible(false);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jbSalirActionPerformed
+
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;

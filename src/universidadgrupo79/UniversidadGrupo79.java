@@ -91,7 +91,7 @@ public class UniversidadGrupo79 {
 //          }
           
           for(Alumno aux: insc.obtenerAlumnosPorMateria(3)){
-              System.out.println(aux.toString());
+              System.out.println(aux.getApellido());
           }
     }
     

@@ -5,17 +5,24 @@
  */
 package Vistas;
 
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author morena
  */
 public class FormularioInscripcion extends javax.swing.JInternalFrame {
-
+ private DefaultTableModel modelo = new DefaultTableModel() {
+        public boolean isCellEditable(int f, int c) {
+            return false;
+    }
+    };
     /**
      * Creates new form FormularioInscripcion
      */
     public FormularioInscripcion() {
         initComponents();
+       
     }
 
     /**
@@ -180,4 +187,20 @@ public class FormularioInscripcion extends javax.swing.JInternalFrame {
     private javax.swing.JRadioButton jrbMatInscriptas;
     private javax.swing.JRadioButton jrbMatNOInscriptas;
     // End of variables declaration//GEN-END:variables
+
+    private void armarTabla(){
+        modelo.addColumn("id");
+        modelo.addColumn("nombre");
+        modelo.addColumn("anio");
+        
+        jTable1.setModel(modelo);
+    }
+
+    private void borrarFilas(){
+        int f = jTable1.getRowCount()-1;
+        for(;f>=0;f--){
+            modelo.removeRow(f);
+        }
+            
+    }
 }

@@ -56,7 +56,8 @@ public class AlumnoData {
     
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null,"Error al acceder a la tabla alumno");
-        }
+            
+        } 
         
     }
     
@@ -151,12 +152,13 @@ public class AlumnoData {
     }
     
     public Alumno buscarAlumnoPorDni(int dni){
-        String sql = "SELECT id_alumno, dni, apellido, nombre, fecha_nac FROM alumno WHERE dni = ? AND estado = 1";
+        String sql = "SELECT id_alumno, dni, apellido, nombre, fecha_nac, estado FROM alumno WHERE dni = ? ";
         Alumno alumnoABuscar = null;
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             
             ps.setInt(1, dni);
+            
             ResultSet rs = ps.executeQuery();
             if(rs.next()){
                 alumnoABuscar = new Alumno();
@@ -167,7 +169,7 @@ public class AlumnoData {
                 alumnoABuscar.setApellido(rs.getString("apellido"));
                 alumnoABuscar.setNombre(rs.getString("nombre"));
                 alumnoABuscar.setFechaNacim(rs.getDate("fecha_nac").toLocalDate());
-                alumnoABuscar.setActivo(true);
+                alumnoABuscar.setActivo(rs.getBoolean("estado"));
        
             } else {
                 JOptionPane.showMessageDialog(null, "No existe alumno con ese DNI");
