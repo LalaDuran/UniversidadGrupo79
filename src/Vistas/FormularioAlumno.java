@@ -11,6 +11,7 @@ import com.toedter.calendar.JDateChooser;
 import java.util.Date;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -25,7 +26,6 @@ public class FormularioAlumno extends javax.swing.JInternalFrame {
         initComponents();
     }
 
-    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -49,8 +49,8 @@ public class FormularioAlumno extends javax.swing.JInternalFrame {
         jbEliminar = new javax.swing.JButton();
         jbGuardar = new javax.swing.JButton();
         jbSalir = new javax.swing.JButton();
-        jdcFechaNac = new com.toedter.calendar.JDateChooser();
         jrbEstado = new javax.swing.JRadioButton();
+        jdcFechaNac = new com.toedter.calendar.JDateChooser();
 
         setPreferredSize(new java.awt.Dimension(600, 500));
 
@@ -140,9 +140,9 @@ public class FormularioAlumno extends javax.swing.JInternalFrame {
                                     .addComponent(jrbEstado)))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel5)
-                                .addGap(33, 33, 33)
-                                .addComponent(jdcFechaNac, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(85, Short.MAX_VALUE))
+                                .addGap(18, 18, 18)
+                                .addComponent(jdcFechaNac, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(61, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -169,9 +169,9 @@ public class FormularioAlumno extends javax.swing.JInternalFrame {
                     .addComponent(jLabel4))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jdcFechaNac, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
+                    .addComponent(jLabel5)
+                    .addComponent(jdcFechaNac, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 96, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbNuevo)
                     .addComponent(jbEliminar)
@@ -184,26 +184,61 @@ public class FormularioAlumno extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbBuscarActionPerformed
-        
-        AlumnoData ad = new AlumnoData();
-        
-        int dni = Integer.parseInt(jtfDocumento.getText());
-        jtfApellido.setText(ad.buscarAlumnoPorDni(dni).getApellido());
-        jtfNombre.setText(ad.buscarAlumnoPorDni(dni).getNombre());
-        
-        LocalDate localDate = LocalDate.of(ad.buscarAlumnoPorDni(dni).getFechaNacim().getYear(),ad.buscarAlumnoPorDni(dni).getFechaNacim().getMonth(),ad.buscarAlumnoPorDni(dni).getFechaNacim().getDayOfMonth());
 
-        // Paso 2: Convertir el LocalDate a Date
-        Date date = java.sql.Date.valueOf(localDate);
-
-        // Paso 3: Crear un JDateChooser y establecer la fecha
-        
-        jdcFechaNac.setDate(date);
-   
-        if(ad.buscarAlumnoPorDni(dni).isActivo() == true){
-            jrbEstado.setSelected(true);
+//        AlumnoData ad = new AlumnoData();
+//        
+//        int dni = Integer.parseInt(jtfDocumento.getText());
+//        jtfApellido.setText(ad.buscarAlumnoPorDni(dni).getApellido());
+//        jtfNombre.setText(ad.buscarAlumnoPorDni(dni).getNombre());
+//        
+//        LocalDate localDate = LocalDate.of(ad.buscarAlumnoPorDni(dni).getFechaNacim().getYear(),ad.buscarAlumnoPorDni(dni).getFechaNacim().getMonth(),ad.buscarAlumnoPorDni(dni).getFechaNacim().getDayOfMonth());
+//
+//        // Paso 2: Convertir el LocalDate a Date
+//        Date date = java.sql.Date.valueOf(localDate);
+//
+//        // Paso 3: Crear un JDateChooser y establecer la fecha
+//        
+//        jdcFechaNac.setDate(date);
+//   
+//        if(ad.buscarAlumnoPorDni(dni).isActivo() == true){
+//            jrbEstado.setSelected(true);
+//        } else {
+//            jrbEstado.setSelected(false);
+//        }
+        if (jtfDocumento.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Debe completar el campo 'Documento'");
         } else {
-            jrbEstado.setSelected(false);
+            boolean aviso = true;
+            try {
+                int dniBuscado = Integer.parseInt(jtfDocumento.getText());
+                AlumnoData ad = new AlumnoData();
+                Alumno alumnoBuscado = new Alumno();
+                alumnoBuscado = ad.buscarAlumnoPorDni(dniBuscado);
+                if (dniBuscado == alumnoBuscado.getDni()) {
+                    jtfDocumento.setText(Integer.toString(alumnoBuscado.getDni()));
+                    jtfNombre.setText(alumnoBuscado.getNombre());
+                    jtfApellido.setText(alumnoBuscado.getApellido());
+                    jrbEstado.setSelected(alumnoBuscado.isActivo());
+                    //default time zone
+                    ZoneId defaultZoneId = ZoneId.systemDefault();
+                    //creating the instance of LocalDate using the day, month, year info
+                    LocalDate localDate = alumnoBuscado.getFechaNacim();
+                    //local date + atStartOfDay() + default time zone + toInstant() = Date
+                    jdcFechaNac.setDate(Date.from(localDate.atStartOfDay(defaultZoneId).toInstant()));
+                } else {
+                    aviso = false;
+                }
+
+            } catch (NumberFormatException nfe) {
+                JOptionPane.showMessageDialog(this, "Ingrese sólo números");
+                jtfDocumento.setText("");
+//            } catch (NullPointerException npe){
+//                JOptionPane.showMessageDialog(this,"DNI inexistente");
+            }
+            if (aviso = false) {
+                JOptionPane.showMessageDialog(this, "DNI inexistente.");
+                jtfDocumento.setText("");
+            }
         }
 
     }//GEN-LAST:event_jbBuscarActionPerformed
@@ -215,37 +250,32 @@ public class FormularioAlumno extends javax.swing.JInternalFrame {
         jtfDocumento.setText(" ");
         jrbEstado.setSelected(false);
         jdcFechaNac.setCalendar(null);
-        
+
     }//GEN-LAST:event_jbNuevoActionPerformed
 
     private void jbEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEliminarActionPerformed
-        
+
         Alumno a = new Alumno();
         AlumnoData ad = new AlumnoData();
         int dni = Integer.parseInt(jtfDocumento.getText());
-        
-       
-        a=ad.buscarAlumnoPorDni(dni);
+
+        a = ad.buscarAlumnoPorDni(dni);
         ad.eliminarAlumno(a.getIdAlumno());
-       
+
     }//GEN-LAST:event_jbEliminarActionPerformed
 
     private void jbGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbGuardarActionPerformed
         AlumnoData ad = new AlumnoData();
         Alumno a = new Alumno();
-        
-        
-        
+
         a.setApellido(jtfApellido.getText());
         a.setActivo(jrbEstado.isSelected());
         a.setNombre(jtfNombre.getText());
         a.setDni(Integer.parseInt(jtfDocumento.getText()));
-        
+
         Date date = jdcFechaNac.getDate();
         a.setFechaNacim(date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
-        
-        
-       
+
         ad.guardarAlumno(a);
 //        if(ad.buscarAlumnoPorDni(a.getDni()) == null){
 //             
@@ -256,12 +286,11 @@ public class FormularioAlumno extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jbGuardarActionPerformed
 
     private void jbSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSalirActionPerformed
-        
+
         this.setVisible(false);
         // TODO add your handling code here:
     }//GEN-LAST:event_jbSalirActionPerformed
 
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
