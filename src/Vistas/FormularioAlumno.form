@@ -64,7 +64,7 @@
                           <Group type="102" attributes="0">
                               <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="jdcFechaNac" min="-2" max="-2" attributes="0"/>
+                              <Component id="jdcFechaNac" min="-2" pref="213" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>

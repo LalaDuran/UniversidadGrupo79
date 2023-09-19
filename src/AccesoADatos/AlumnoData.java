@@ -62,19 +62,21 @@ public class AlumnoData {
     }
     
     public void modificarAlumno(Alumno alumno) {
-        String sql = "UPDATE alumno set dni=?, apellido=?, nombre=?, fecha_nac=?"
-                + "WHERE id_alumno = ?";
+        String sql = "UPDATE alumno SET apellido = ?, nombre = ?, fecha_nac= ? WHERE id_alumno = ?";
         
         try {
             PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(1, alumno.getDni());
-            ps.setString(2, alumno.getApellido());
-            ps.setString(3, alumno.getNombre());
-            ps.setDate(4,Date.valueOf(alumno.getFechaNacim()));   
-            ps.setInt(5, alumno.getIdAlumno());
+            
+            ps.setString(1, alumno.getApellido());
+            ps.setString(2, alumno.getNombre());
+            ps.setDate(3,Date.valueOf(alumno.getFechaNacim()));   
+            ps.setInt(4, alumno.getIdAlumno());
+            ps.setInt(5, alumno.getDni());
+           
            
             int exito = ps.executeUpdate();
             if(exito ==1){
+                System.out.println(" da");
                 JOptionPane.showMessageDialog(null, "Alumno modificado");
             }
             
@@ -152,6 +154,7 @@ public class AlumnoData {
     }
     
     public Alumno buscarAlumnoPorDni(int dni){
+        //SACAR ESTADO DE WHERE PARA PODER VISUALZAR ALUMNOS ACTIVOS Y NO ACTIVOS
         String sql = "SELECT id_alumno, dni, apellido, nombre, fecha_nac, estado FROM alumno WHERE dni = ? ";
         Alumno alumnoABuscar = null;
         try {
@@ -183,7 +186,8 @@ public class AlumnoData {
     }
     
     public List<Alumno> listarAlumno(){
-        String sql = "SELECT id_alumno, dni, apellido, nombre, fecha_nac FROM alumno WHERE estado = 1";
+        //Sacamos estado del WHERE
+        String sql = "SELECT id_alumno, dni, apellido, nombre, fecha_nac FROM alumno ";
         ArrayList<Alumno> alumnos = new ArrayList<>();
         try {
             PreparedStatement ps = con.prepareStatement(sql);

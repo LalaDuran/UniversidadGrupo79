@@ -141,7 +141,7 @@ public class FormularioAlumno extends javax.swing.JInternalFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel5)
                                 .addGap(18, 18, 18)
-                                .addComponent(jdcFechaNac, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(jdcFechaNac, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(61, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -185,36 +185,17 @@ public class FormularioAlumno extends javax.swing.JInternalFrame {
 
     private void jbBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbBuscarActionPerformed
 
-//        AlumnoData ad = new AlumnoData();
-//        
-//        int dni = Integer.parseInt(jtfDocumento.getText());
-//        jtfApellido.setText(ad.buscarAlumnoPorDni(dni).getApellido());
-//        jtfNombre.setText(ad.buscarAlumnoPorDni(dni).getNombre());
-//        
-//        LocalDate localDate = LocalDate.of(ad.buscarAlumnoPorDni(dni).getFechaNacim().getYear(),ad.buscarAlumnoPorDni(dni).getFechaNacim().getMonth(),ad.buscarAlumnoPorDni(dni).getFechaNacim().getDayOfMonth());
-//
-//        // Paso 2: Convertir el LocalDate a Date
-//        Date date = java.sql.Date.valueOf(localDate);
-//
-//        // Paso 3: Crear un JDateChooser y establecer la fecha
-//        
-//        jdcFechaNac.setDate(date);
-//   
-//        if(ad.buscarAlumnoPorDni(dni).isActivo() == true){
-//            jrbEstado.setSelected(true);
-//        } else {
-//            jrbEstado.setSelected(false);
-//        }
+
         if (jtfDocumento.getText().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Debe completar el campo 'Documento'");
         } else {
-            boolean aviso = true;
+           
             try {
                 int dniBuscado = Integer.parseInt(jtfDocumento.getText());
                 AlumnoData ad = new AlumnoData();
                 Alumno alumnoBuscado = new Alumno();
                 alumnoBuscado = ad.buscarAlumnoPorDni(dniBuscado);
-                if (dniBuscado == alumnoBuscado.getDni()) {
+               // if (dniBuscado == alumnoBuscado.getDni()) {
                     jtfDocumento.setText(Integer.toString(alumnoBuscado.getDni()));
                     jtfNombre.setText(alumnoBuscado.getNombre());
                     jtfApellido.setText(alumnoBuscado.getApellido());
@@ -225,20 +206,15 @@ public class FormularioAlumno extends javax.swing.JInternalFrame {
                     LocalDate localDate = alumnoBuscado.getFechaNacim();
                     //local date + atStartOfDay() + default time zone + toInstant() = Date
                     jdcFechaNac.setDate(Date.from(localDate.atStartOfDay(defaultZoneId).toInstant()));
-                } else {
-                    aviso = false;
-                }
+
 
             } catch (NumberFormatException nfe) {
                 JOptionPane.showMessageDialog(this, "Ingrese sólo números");
                 jtfDocumento.setText("");
-//            } catch (NullPointerException npe){
-//                JOptionPane.showMessageDialog(this,"DNI inexistente");
+            } catch (NullPointerException npe){
+
             }
-            if (aviso = false) {
-                JOptionPane.showMessageDialog(this, "DNI inexistente.");
-                jtfDocumento.setText("");
-            }
+
         }
 
     }//GEN-LAST:event_jbBuscarActionPerformed
@@ -257,37 +233,64 @@ public class FormularioAlumno extends javax.swing.JInternalFrame {
 
         Alumno a = new Alumno();
         AlumnoData ad = new AlumnoData();
-        int dni = Integer.parseInt(jtfDocumento.getText());
+        
+        try{
+            int dni = Integer.parseInt(jtfDocumento.getText());
 
-        a = ad.buscarAlumnoPorDni(dni);
-        ad.eliminarAlumno(a.getIdAlumno());
+            a = ad.buscarAlumnoPorDni(dni);
+            ad.eliminarAlumno(a.getIdAlumno());
+        } catch(NumberFormatException ex){
+            JOptionPane.showMessageDialog(null, "Ingrese un DNI");
+            
+        }
+            
+        
 
     }//GEN-LAST:event_jbEliminarActionPerformed
 
     private void jbGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbGuardarActionPerformed
         AlumnoData ad = new AlumnoData();
-        Alumno a = new Alumno();
 
-        a.setApellido(jtfApellido.getText());
-        a.setActivo(jrbEstado.isSelected());
-        a.setNombre(jtfNombre.getText());
+        try{
+            
+        Date date = jdcFechaNac.getDate();
+        LocalDate ld = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        Alumno a = new Alumno(jtfApellido.getText(),jtfNombre.getText(),ld,jrbEstado.isSelected());
         a.setDni(Integer.parseInt(jtfDocumento.getText()));
 
-        Date date = jdcFechaNac.getDate();
-        a.setFechaNacim(date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
-
-        ad.guardarAlumno(a);
-//        if(ad.buscarAlumnoPorDni(a.getDni()) == null){
-//             
-//        } else {
-//            ad.modificarAlumno(a);
-//        }
+        boolean existeDNI=false;
+        
+        for (Alumno existingAlumno : ad.listarAlumno()) {
+            
+            if (existingAlumno.getDni() == a.getDni()) {
+                //SI EXISTE EL ALUMNO SETEAMOS EL ID PARA PODER ACCEDER A EL METODO MODIFICAR, 
+                //SI NO EXISTE LA BASE DE DATOS LE ASIGNA POR DEFECTO 
+                a.setIdAlumno(ad.buscarAlumnoPorDni(a.getDni()).getIdAlumno());
+                existeDNI = true;  
+                break;
+            }
+        } 
+        //SI EXISTE EL ALUMNO, ENTRA AL METODO MODIFICAR, SINO A GUARDAR
+        if(existeDNI==true){
+            ad.modificarAlumno(a);
+        }else{
+            ad.guardarAlumno(a);
+        }       
+   
+        } catch(NullPointerException ex ){
+            JOptionPane.showMessageDialog(null, "Complete todos los campos");
+        }catch(NumberFormatException ex ){
+            JOptionPane.showMessageDialog(null, "Complete todos los campos");
+        }
+       
+////        
+      
         // TODO add your handling code here:
     }//GEN-LAST:event_jbGuardarActionPerformed
 
     private void jbSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSalirActionPerformed
 
-        this.setVisible(false);
+        this.dispose();
         // TODO add your handling code here:
     }//GEN-LAST:event_jbSalirActionPerformed
 
