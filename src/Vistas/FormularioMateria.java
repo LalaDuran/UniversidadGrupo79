@@ -5,6 +5,10 @@
  */
 package Vistas;
 
+import AccesoADatos.MateriaData;
+import Entidades.Materia;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author morena
@@ -16,6 +20,11 @@ public class FormularioMateria extends javax.swing.JInternalFrame {
      */
     public FormularioMateria() {
         initComponents();
+      
+        jbEliminar.setEnabled(false);
+        jbNuevo.setEnabled(false);
+        
+        
     }
 
     /**
@@ -71,18 +80,43 @@ public class FormularioMateria extends javax.swing.JInternalFrame {
         });
 
         jbBuscar.setText("Buscar");
+        jbBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbBuscarActionPerformed(evt);
+            }
+        });
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel5.setText("Formulario de Materia");
 
         jbNuevo.setText("Nuevo");
+        jbNuevo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbNuevoActionPerformed(evt);
+            }
+        });
 
         jbEliminar.setText("Eliminar");
+        jbEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbEliminarActionPerformed(evt);
+            }
+        });
 
         jbGuardar.setText("Guardar");
+        jbGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbGuardarActionPerformed(evt);
+            }
+        });
 
         jbSalir.setText("Salir");
+        jbSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbSalirActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -161,7 +195,8 @@ public class FormularioMateria extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jtfCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfCodigoActionPerformed
-        // TODO add your handling code here:
+        
+   
     }//GEN-LAST:event_jtfCodigoActionPerformed
 
     private void jtfAñoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfAñoActionPerformed
@@ -171,6 +206,118 @@ public class FormularioMateria extends javax.swing.JInternalFrame {
     private void jtfNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfNombreActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jtfNombreActionPerformed
+
+    private void jbBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbBuscarActionPerformed
+        
+        if(jtfCodigo.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "Debe completar el campo Codigo");
+        } else{
+            
+             try {
+                int codigo = Integer.parseInt(jtfCodigo.getText());
+                MateriaData md = new MateriaData();
+                Materia materiaBuscada = new Materia();
+                materiaBuscada = md.buscarMateria(codigo);
+
+                    jtfNombre.setText(materiaBuscada.getNombre());
+                    jtfAño.setText(Integer.toString(materiaBuscada.getAnio()));
+                    jrbEstado.setSelected(materiaBuscada.isActivo());
+                    jbEliminar.setEnabled(true);
+                    jbNuevo.setEnabled(true);
+                    
+            } catch (NumberFormatException nfe) {
+                JOptionPane.showMessageDialog(this, "Ingrese sólo números");
+                jtfCodigo.setText("");
+            } catch (NullPointerException npe){
+
+            }
+            
+        }
+
+        
+    }//GEN-LAST:event_jbBuscarActionPerformed
+
+    private void jbSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSalirActionPerformed
+        // Si elige Salir invisibiliza, deselecciona y cierra la ventana.
+        this.dispose();
+ 
+    }//GEN-LAST:event_jbSalirActionPerformed
+
+    private void jbEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEliminarActionPerformed
+
+        if(jtfCodigo.getText().isEmpty()){
+            
+            JOptionPane.showMessageDialog(null, "Complete el campo Codigo.");
+        } else{
+            
+            try{
+                Materia m = new Materia();
+                MateriaData md = new MateriaData();
+                
+                int codigo = Integer.parseInt(jtfCodigo.getText());
+                m= md.buscarMateria(codigo);
+                md.eliminarMateria(m.getIdMateria());
+                
+                jtfCodigo.setText("");
+                jtfAño.setText("");
+                jtfNombre.setText("");
+                jrbEstado.setSelected(false);
+                jbEliminar.setEnabled(false);
+                jbNuevo.setEnabled(false);
+                
+            } catch( NumberFormatException ex){
+                JOptionPane.showMessageDialog(null, "Ingrese solo numeros");
+            }
+        }
+    }//GEN-LAST:event_jbEliminarActionPerformed
+
+    private void jbNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbNuevoActionPerformed
+      
+                jtfCodigo.setText("");
+                jtfAño.setText("");
+                jtfNombre.setText("");
+                jrbEstado.setSelected(false);
+                jbNuevo.setEnabled(false);
+                jbEliminar.setEnabled(false);
+                
+    }//GEN-LAST:event_jbNuevoActionPerformed
+
+    private void jbGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbGuardarActionPerformed
+
+        MateriaData md = new MateriaData();
+
+        try{
+            
+        
+        Materia m = new Materia(Integer.parseInt(jtfCodigo.getText()),jtfNombre.getText(),Integer.parseInt(jtfAño.getText()),jrbEstado.isSelected());
+        
+
+        boolean existeCodigo=false;
+        
+        for (Materia existingMateria : md.listarMateria()) {
+            //BUSCA SI LA MATERIA EXISTE DENTRO DEL LISTADO DE MATERIAS
+            if (existingMateria.getIdMateria() == m.getIdMateria()) {
+              
+                
+                existeCodigo = true;  
+                break;
+            }
+        } 
+        //SI EXISTE LA MATERIA, ENTRA AL METODO MODIFICAR, SINO A GUARDAR
+        if(existeCodigo==true){
+            md.modificarMateria(m);
+        }else{
+            md.guardarMateria(m);
+        }       
+   
+        } catch(NullPointerException ex ){
+            JOptionPane.showMessageDialog(null, "Complete todos los campos");
+        }catch(NumberFormatException ex ){
+            JOptionPane.showMessageDialog(null, "Complete todos los campos");
+        }
+
+        
+    }//GEN-LAST:event_jbGuardarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

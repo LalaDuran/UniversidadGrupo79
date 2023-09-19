@@ -121,7 +121,9 @@ public class MateriaData {
     }
     
     public Materia buscarMateria(int id){
-        String sql = "SELECT nombre, anio FROM materia WHERE id_materia = ? AND estado = 1";
+        
+        //DECIDIMOS SACAR EL ESTADO DEL WHERE PARA PODER ACCEDER A MATERIAS ACTIVAS E INACTIVAS
+        String sql = "SELECT nombre, anio FROM materia WHERE id_materia = ? ";
         Materia materiaABuscar = null;
         try {
             PreparedStatement ps = con.prepareStatement(sql);
@@ -149,7 +151,7 @@ public class MateriaData {
          
     }
         public List<Materia> listarMateria(){
-        String sql = "SELECT id_materia, nombre, anio FROM materia WHERE estado = 1";
+        String sql = "SELECT id_materia, nombre, anio FROM materia ";
         ArrayList<Materia> materias = new ArrayList<>();
         try {
             PreparedStatement ps = con.prepareStatement(sql);
