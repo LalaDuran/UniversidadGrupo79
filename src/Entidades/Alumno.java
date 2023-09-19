@@ -32,6 +32,14 @@ public class Alumno {
         this.activo = activo;
     }
 
+    public Alumno(String apellido, String nombre, LocalDate fechaNacim, boolean activo) {
+        this.apellido = apellido;
+        this.nombre = nombre;
+        this.fechaNacim = fechaNacim;
+        this.activo = activo;
+    }
+
+    
 //    public Alumno(int idAlumno) {
 //        this.idAlumno = idAlumno;
 //    }
