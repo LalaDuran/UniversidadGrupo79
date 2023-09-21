@@ -5,6 +5,13 @@
  */
 package Vistas;
 
+import AccesoADatos.AlumnoData;
+import AccesoADatos.InscripcionData;
+import AccesoADatos.MateriaData;
+import Entidades.Alumno;
+import Entidades.Materia;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -12,7 +19,7 @@ import javax.swing.table.DefaultTableModel;
  * @author morena
  */
 public class FormularioInscripcion extends javax.swing.JInternalFrame {
- private DefaultTableModel modelo = new DefaultTableModel() {
+ private final DefaultTableModel modelo = new DefaultTableModel() {
         public boolean isCellEditable(int f, int c) {
             return false;
     }
@@ -23,6 +30,11 @@ public class FormularioInscripcion extends javax.swing.JInternalFrame {
     public FormularioInscripcion() {
         initComponents();
        
+        cargarAlumnos();
+       
+        armarTabla();
+        jbAnularInsc.setEnabled(false);
+        jbInscribir.setEnabled(false);
     }
 
     /**
@@ -34,8 +46,6 @@ public class FormularioInscripcion extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         jcbSeleccionarAlumno = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
@@ -45,29 +55,20 @@ public class FormularioInscripcion extends javax.swing.JInternalFrame {
         jrbMatInscriptas = new javax.swing.JRadioButton();
         jrbMatNOInscriptas = new javax.swing.JRadioButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        jTablaMaterias = new javax.swing.JTable();
         jbInscribir = new javax.swing.JButton();
         jbAnularInsc = new javax.swing.JButton();
         jbSalir = new javax.swing.JButton();
-
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane1.setViewportView(jTable1);
 
         setPreferredSize(new java.awt.Dimension(600, 500));
 
         jLabel1.setText("Seleccione un alumno");
 
-        jcbSeleccionarAlumno.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jcbSeleccionarAlumno.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbSeleccionarAlumnoActionPerformed(evt);
+            }
+        });
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -81,7 +82,19 @@ public class FormularioInscripcion extends javax.swing.JInternalFrame {
 
         jLabel5.setText("Materias No Inscriptas");
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        jrbMatInscriptas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jrbMatInscriptasActionPerformed(evt);
+            }
+        });
+
+        jrbMatNOInscriptas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jrbMatNOInscriptasActionPerformed(evt);
+            }
+        });
+
+        jTablaMaterias.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -92,13 +105,18 @@ public class FormularioInscripcion extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane2.setViewportView(jTable2);
+        jScrollPane2.setViewportView(jTablaMaterias);
 
         jbInscribir.setText("Inscribir");
 
         jbAnularInsc.setText("Anular Inscripcion");
 
         jbSalir.setText("Salir");
+        jbSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbSalirActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -131,8 +149,8 @@ public class FormularioInscripcion extends javax.swing.JInternalFrame {
                                 .addGap(43, 43, 43)
                                 .addComponent(jLabel1)
                                 .addGap(18, 18, 18)
-                                .addComponent(jcbSeleccionarAlumno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 72, Short.MAX_VALUE))
+                                .addComponent(jcbSeleccionarAlumno, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 24, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
@@ -163,11 +181,70 @@ public class FormularioInscripcion extends javax.swing.JInternalFrame {
                     .addComponent(jbInscribir)
                     .addComponent(jbAnularInsc)
                     .addComponent(jbSalir))
-                .addContainerGap(35, Short.MAX_VALUE))
+                .addContainerGap(68, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jcbSeleccionarAlumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbSeleccionarAlumnoActionPerformed
+
+        
+        
+    }//GEN-LAST:event_jcbSeleccionarAlumnoActionPerformed
+
+    private void jbSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSalirActionPerformed
+
+        //INVISIBILIZA, CIERRA,DESELECCIONA
+        this.dispose();
+       
+    }//GEN-LAST:event_jbSalirActionPerformed
+
+    private void jrbMatInscriptasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrbMatInscriptasActionPerformed
+
+        
+        InscripcionData id = new InscripcionData();
+        
+        Alumno a = (Alumno)jcbSeleccionarAlumno.getSelectedItem();
+        
+        if(jrbMatInscriptas.isSelected()){
+            jrbMatNOInscriptas.setSelected(false);
+            jbAnularInsc.setEnabled(true);
+            
+            jbInscribir.setEnabled(false);
+        }
+        borrarFilas();
+        for(Materia aux : id.obtenerMateriasCursadas(a.getIdAlumno())){
+            
+            modelo.addRow(new Object[]{aux.getIdMateria(),aux.getNombre(),aux.getAnio()
+                    
+            });
+        }
+        
+       
+    }//GEN-LAST:event_jrbMatInscriptasActionPerformed
+
+    private void jrbMatNOInscriptasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrbMatNOInscriptasActionPerformed
+        // TODO add your handling code here:
+        InscripcionData id = new InscripcionData();
+        
+        Alumno a = (Alumno)jcbSeleccionarAlumno.getSelectedItem();
+        
+        if(jrbMatNOInscriptas.isSelected()){
+            jrbMatInscriptas.setSelected(false);
+            jbInscribir.setEnabled(true);
+            jbAnularInsc.setEnabled(false);
+       
+        }
+        borrarFilas();
+        for(Materia aux : id.obtenerMateriasNoCursadas(a.getIdAlumno())){
+            
+            modelo.addRow(new Object[]{aux.getIdMateria(),aux.getNombre(),aux.getAnio()
+                    
+            });
+        }
+        
+    }//GEN-LAST:event_jrbMatNOInscriptasActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -176,14 +253,12 @@ public class FormularioInscripcion extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
+    private javax.swing.JTable jTablaMaterias;
     private javax.swing.JButton jbAnularInsc;
     private javax.swing.JButton jbInscribir;
     private javax.swing.JButton jbSalir;
-    private javax.swing.JComboBox<String> jcbSeleccionarAlumno;
+    private javax.swing.JComboBox<Alumno> jcbSeleccionarAlumno;
     private javax.swing.JRadioButton jrbMatInscriptas;
     private javax.swing.JRadioButton jrbMatNOInscriptas;
     // End of variables declaration//GEN-END:variables
@@ -191,16 +266,47 @@ public class FormularioInscripcion extends javax.swing.JInternalFrame {
     private void armarTabla(){
         modelo.addColumn("id");
         modelo.addColumn("nombre");
-        modelo.addColumn("anio");
+        modelo.addColumn("año");
         
-        jTable1.setModel(modelo);
+        jTablaMaterias.setModel(modelo);
+        jTablaMaterias.getTableHeader().setReorderingAllowed(false);
+        //para centrar las celdas del encabezado
+        DefaultTableCellRenderer header = (DefaultTableCellRenderer) jTablaMaterias.getTableHeader().getDefaultRenderer();
+        header.setHorizontalAlignment(SwingConstants.CENTER);
+        
+        //para centrar los datos de la primera columna
+        DefaultTableCellRenderer tcr0 = new DefaultTableCellRenderer();
+        tcr0.setHorizontalAlignment(SwingConstants.CENTER);
+        jTablaMaterias.getColumnModel().getColumn(0).setCellRenderer(tcr0);
+ 
+        //Para centrar los datos de la tercera columna
+        tcr0.setHorizontalAlignment(SwingConstants.CENTER);
+        jTablaMaterias.getColumnModel().getColumn(2).setCellRenderer(tcr0);
     }
 
     private void borrarFilas(){
-        int f = jTable1.getRowCount()-1;
+        int f = jTablaMaterias.getRowCount()-1;
         for(;f>=0;f--){
             modelo.removeRow(f);
         }
             
+    }
+    
+    private void cargarAlumnos(){
+        AlumnoData ad = new AlumnoData();
+        
+        for(Alumno item: ad.listarAlumno()){
+             jcbSeleccionarAlumno.addItem(item);
+        }
+  }
+    private void cargarMaterias(){
+        
+        MateriaData md = new MateriaData();
+        
+        for(Materia materia: md.listarMateria()){
+            modelo.addRow(new Object[]{
+                materia.getIdMateria(),materia.getNombre(),materia.getAnio()
+            });
+        }
     }
 }
