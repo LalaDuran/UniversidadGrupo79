@@ -9,6 +9,7 @@ import AccesoADatos.AlumnoData;
 import AccesoADatos.InscripcionData;
 import AccesoADatos.MateriaData;
 import Entidades.Alumno;
+import Entidades.Inscripcion;
 import Entidades.Materia;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -64,12 +65,6 @@ public class FormularioInscripcion extends javax.swing.JInternalFrame {
 
         jLabel1.setText("Seleccione un alumno");
 
-        jcbSeleccionarAlumno.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jcbSeleccionarAlumnoActionPerformed(evt);
-            }
-        });
-
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("Listado de Materias");
@@ -108,8 +103,18 @@ public class FormularioInscripcion extends javax.swing.JInternalFrame {
         jScrollPane2.setViewportView(jTablaMaterias);
 
         jbInscribir.setText("Inscribir");
+        jbInscribir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbInscribirActionPerformed(evt);
+            }
+        });
 
         jbAnularInsc.setText("Anular Inscripcion");
+        jbAnularInsc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbAnularInscActionPerformed(evt);
+            }
+        });
 
         jbSalir.setText("Salir");
         jbSalir.addActionListener(new java.awt.event.ActionListener() {
@@ -187,12 +192,6 @@ public class FormularioInscripcion extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jcbSeleccionarAlumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbSeleccionarAlumnoActionPerformed
-
-        
-        
-    }//GEN-LAST:event_jcbSeleccionarAlumnoActionPerformed
-
     private void jbSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSalirActionPerformed
 
         //INVISIBILIZA, CIERRA,DESELECCIONA
@@ -245,6 +244,41 @@ public class FormularioInscripcion extends javax.swing.JInternalFrame {
         }
         
     }//GEN-LAST:event_jrbMatNOInscriptasActionPerformed
+
+    private void jbInscribirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbInscribirActionPerformed
+        InscripcionData inscData = new InscripcionData();
+        Inscripcion insc = new Inscripcion();
+        Materia m = new Materia();
+        
+        int filaSeleccionada = jTablaMaterias.getSelectedRow();
+        
+        m.setIdMateria((int)jTablaMaterias.getValueAt(filaSeleccionada, 0));
+        m.setNombre((String)jTablaMaterias.getValueAt(filaSeleccionada, 1));
+        m.setAnio((int)jTablaMaterias.getValueAt(filaSeleccionada, 2));
+        
+        
+        insc.setAlumno((Alumno)jcbSeleccionarAlumno.getSelectedItem());
+        insc.setMateria(m);
+        
+        inscData.guardarInscripcion(insc);
+        modelo.removeRow(filaSeleccionada);
+        
+    }//GEN-LAST:event_jbInscribirActionPerformed
+
+    private void jbAnularInscActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAnularInscActionPerformed
+
+        InscripcionData inscData = new InscripcionData();
+        
+        Materia m = new Materia();
+        Alumno a = new Alumno();
+        
+        int filaSeleccionada = jTablaMaterias.getSelectedRow();
+        a = (Alumno)jcbSeleccionarAlumno.getSelectedItem();
+        m.setIdMateria((int)jTablaMaterias.getValueAt(filaSeleccionada, 0));
+        inscData.borrarInscripcionMateriaAlumno(a.getIdAlumno(), m.getIdMateria());
+        modelo.removeRow(filaSeleccionada);
+        
+    }//GEN-LAST:event_jbAnularInscActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
