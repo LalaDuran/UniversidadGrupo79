@@ -38,13 +38,7 @@ public class Alumno {
         this.fechaNacim = fechaNacim;
         this.activo = activo;
     }
-
-    
-//    public Alumno(int idAlumno) {
-//        this.idAlumno = idAlumno;
-//    }
-//    
-    
+   
 
     public int getIdAlumno() {
         return idAlumno;

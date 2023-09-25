@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Vistas;
 
 import AccesoADatos.AlumnoData;
@@ -13,17 +8,15 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author morena
- */
 public class FormularioAlumno extends javax.swing.JInternalFrame {
 
-    /**
-     * Creates new form FormularioAlumno
-     */
     public FormularioAlumno() {
         initComponents();
+        
+        //Inhabilita los botones 'Nuevo' y 'Eliminar'
+        jbNuevo.setEnabled(false);
+        jbEliminar.setEnabled(false);
+
     }
 
     /**
@@ -142,7 +135,7 @@ public class FormularioAlumno extends javax.swing.JInternalFrame {
                                 .addComponent(jLabel5)
                                 .addGap(18, 18, 18)
                                 .addComponent(jdcFechaNac, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(61, Short.MAX_VALUE))
+                .addContainerGap(108, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -167,11 +160,11 @@ public class FormularioAlumno extends javax.swing.JInternalFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jrbEstado))
                     .addComponent(jLabel4))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel5)
                     .addComponent(jdcFechaNac, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 96, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 108, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbNuevo)
                     .addComponent(jbEliminar)
@@ -185,113 +178,150 @@ public class FormularioAlumno extends javax.swing.JInternalFrame {
 
     private void jbBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbBuscarActionPerformed
 
-
+        //Si no completa el campo 'Documento'
         if (jtfDocumento.getText().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Debe completar el campo 'Documento'");
+
         } else {
-           
+
             try {
+                //Asignamos a una variable el dato ingresado en la vista
                 int dniBuscado = Integer.parseInt(jtfDocumento.getText());
+
+                //Instanciamos un alumno y alumnoData para usar luego
                 AlumnoData ad = new AlumnoData();
                 Alumno alumnoBuscado = new Alumno();
+
+                //Buscamos un alumno por dni usando buscar de alumnoData
                 alumnoBuscado = ad.buscarAlumnoPorDni(dniBuscado);
-               // if (dniBuscado == alumnoBuscado.getDni()) {
-                    jtfDocumento.setText(Integer.toString(alumnoBuscado.getDni()));
-                    jtfNombre.setText(alumnoBuscado.getNombre());
-                    jtfApellido.setText(alumnoBuscado.getApellido());
-                    jrbEstado.setSelected(alumnoBuscado.isActivo());
-                    //default time zone
-                    ZoneId defaultZoneId = ZoneId.systemDefault();
-                    //creating the instance of LocalDate using the day, month, year info
-                    LocalDate localDate = alumnoBuscado.getFechaNacim();
-                    //local date + atStartOfDay() + default time zone + toInstant() = Date
-                    jdcFechaNac.setDate(Date.from(localDate.atStartOfDay(defaultZoneId).toInstant()));
 
+                //Mostramos en la vista los datos del alumno encontrado
+                jtfDocumento.setText(Integer.toString(alumnoBuscado.getDni()));
+                jtfNombre.setText(alumnoBuscado.getNombre());
+                jtfApellido.setText(alumnoBuscado.getApellido());
+                jrbEstado.setSelected(alumnoBuscado.isActivo());
 
+                //Pasamos de Date a LocalDate
+                //default time zone
+                ZoneId defaultZoneId = ZoneId.systemDefault();
+                //creating the instance of LocalDate using the day, month, year info
+                LocalDate localDate = alumnoBuscado.getFechaNacim();
+                //local date + atStartOfDay() + default time zone + toInstant() = Date
+                jdcFechaNac.setDate(Date.from(localDate.atStartOfDay(defaultZoneId).toInstant()));
+                //Habilitamos los botones 'Nuevo' y 'Eliminar'
+                jbNuevo.setEnabled(true);
+                jbEliminar.setEnabled(true);
+                
             } catch (NumberFormatException nfe) {
+                //si ingresa letras o símbolos
                 JOptionPane.showMessageDialog(this, "Ingrese sólo números");
                 jtfDocumento.setText("");
-            } catch (NullPointerException npe){
-
+            } catch (NullPointerException npe) {
+                //si no existe alumno con el dni tipeado en la vista, salta el JOptionPane del método buscarAlumnoPorDni
             }
-
         }
-
     }//GEN-LAST:event_jbBuscarActionPerformed
 
-    private void jbNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbNuevoActionPerformed
 
-        jtfApellido.setText(" ");
-        jtfNombre.setText(" ");
-        jtfDocumento.setText(" ");
+    private void jbNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbNuevoActionPerformed
+        //Limpia la pantalla para cargar un alumno nuevo
+
+        jtfApellido.setText("");
+        jtfNombre.setText("");
+        jtfDocumento.setText("");
         jrbEstado.setSelected(false);
         jdcFechaNac.setCalendar(null);
+
 
     }//GEN-LAST:event_jbNuevoActionPerformed
 
     private void jbEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEliminarActionPerformed
+        //Si el campo Código está vacío
+        if (jtfDocumento.getText().isEmpty()) {
 
-        Alumno a = new Alumno();
-        AlumnoData ad = new AlumnoData();
-        
-        try{
-            int dni = Integer.parseInt(jtfDocumento.getText());
+            JOptionPane.showMessageDialog(null, "Complete el campo 'Documento'");
+        } else {
 
-            a = ad.buscarAlumnoPorDni(dni);
-            ad.eliminarAlumno(a.getIdAlumno());
-        } catch(NumberFormatException ex){
-            JOptionPane.showMessageDialog(null, "Ingrese un DNI");
-            
+            try {
+                //Instanciamos alumno y alumnoData para usar luego
+                Alumno a = new Alumno();
+                AlumnoData ad = new AlumnoData();
+                //Creamos una variable con el documento tipeado en la vista
+                int dni = Integer.parseInt(jtfDocumento.getText());
+
+                //Buscamos el alumno con ese documento y lo enviamos al alumno ya creado
+                a = ad.buscarAlumnoPorDni(dni);
+
+                //Eliminamos el alumno llamando al método eliminarAlumno de alumnoData
+                ad.eliminarAlumno(a.getIdAlumno());
+
+                //Limpiamos los campos de la vista
+                jtfDocumento.setText("");
+                jtfNombre.setText("");
+                jtfApellido.setText("");
+                jrbEstado.setSelected(false);
+
+            } catch (NumberFormatException ex) {
+                //Si no tipea un documento en la vista
+                JOptionPane.showMessageDialog(null, "Ingrese un DNI");
+            }
         }
-            
-        
 
     }//GEN-LAST:event_jbEliminarActionPerformed
 
     private void jbGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbGuardarActionPerformed
+        //Instanciamos alumnoData para usar luego
         AlumnoData ad = new AlumnoData();
 
-        try{
-            
-        Date date = jdcFechaNac.getDate();
-        LocalDate ld = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        Alumno a = new Alumno(jtfApellido.getText(),jtfNombre.getText(),ld,jrbEstado.isSelected());
-        a.setDni(Integer.parseInt(jtfDocumento.getText()));
+        try {
+            //creamos las variables y asignamos los valores tipeados en la vista
+            int dni = Integer.parseInt(jtfDocumento.getText());
+            String apellido = jtfApellido.getText();
+            String nombre = jtfNombre.getText();
+            Date date = jdcFechaNac.getDate();
+            LocalDate ld = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            boolean estado = jrbEstado.isSelected();
+            //Instanciamos un alumno con los parámetros anteriores
+            Alumno a = new Alumno(dni, apellido, nombre, ld, estado);
 
-        boolean existeDNI=false;
-        
-        for (Alumno existingAlumno : ad.listarAlumno()) {
-            
-            if (existingAlumno.getDni() == a.getDni()) {
-                //SI EXISTE EL ALUMNO SETEAMOS EL ID PARA PODER ACCEDER A EL METODO MODIFICAR, 
-                //SI NO EXISTE LA BASE DE DATOS LE ASIGNA POR DEFECTO 
-                a.setIdAlumno(ad.buscarAlumnoPorDni(a.getDni()).getIdAlumno());
-                existeDNI = true;  
-                break;
+            //declaramos una variable bandera por si ya existe el dni tipeado en vista
+            boolean existeDNI = false;
+
+            //Recorremos la lista de alumnos existentes
+            for (Alumno existingAlumno : ad.listarAlumno()) {
+
+                if (existingAlumno.getDni() == a.getDni()) {
+                    //Si existe el alumno, seteamos el id para poder acceder al método modificar; si no existe se activa la bandera más abajo 
+                    a.setIdAlumno(ad.buscarAlumnoPorDni(a.getDni()).getIdAlumno());
+                    existeDNI = true;
+                    break;
+                }
             }
-        } 
-        //SI EXISTE EL ALUMNO, ENTRA AL METODO MODIFICAR, SINO A GUARDAR
-        if(existeDNI==true){
-            ad.modificarAlumno(a);
-        }else{
-            ad.guardarAlumno(a);
-        }       
-   
-        } catch(NullPointerException ex ){
-            JOptionPane.showMessageDialog(null, "Complete todos los campos");
-        }catch(NumberFormatException ex ){
-            JOptionPane.showMessageDialog(null, "Complete todos los campos");
+            //Si existe el alumno usa el método modificarAlumno; si no, guardarAlumno
+            if (existeDNI == true) {
+                ad.modificarAlumno(a);
+            } else {
+                ad.guardarAlumno(a);
+            }
+            
+            //Habilitamos los botones 'Eliminar' y 'Nuevo'
+            jbEliminar.setEnabled(true);
+            jbNuevo.setEnabled(true);
+
+        } catch (NullPointerException ex) {
+            //Si algún campo está vacío
+            JOptionPane.showMessageDialog(null, "Complete el campo 'Documento'");
+        } catch (NumberFormatException ex) {
+            //Si no usa números enteros en Documento
+            JOptionPane.showMessageDialog(null,"Use sólo números enteros para 'Documento'");
         }
-       
-////        
-      
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_jbGuardarActionPerformed
 
     private void jbSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSalirActionPerformed
-
+        //Invisibiliza, deselecciona y cierra la ventana
         this.dispose();
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_jbSalirActionPerformed
 
 

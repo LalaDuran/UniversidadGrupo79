@@ -1,30 +1,27 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Vistas;
 
 import AccesoADatos.MateriaData;
 import Entidades.Materia;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author morena
- */
 public class FormularioMateria extends javax.swing.JInternalFrame {
 
-    /**
-     * Creates new form FormularioMateria
-     */
     public FormularioMateria() {
+
         initComponents();
+
       
         jbEliminar.setEnabled(false);
         jbNuevo.setEnabled(false);
         
         
+
+        
+        //Inhabilita los botones 'Nuevo' y 'Eliminar'
+        jbNuevo.setEnabled(false);
+        jbEliminar.setEnabled(false);
+
+
     }
 
     /**
@@ -53,31 +50,13 @@ public class FormularioMateria extends javax.swing.JInternalFrame {
 
         setPreferredSize(new java.awt.Dimension(600, 500));
 
-        jLabel1.setText("Codigo");
+        jLabel1.setText("Código");
 
         jLabel2.setText("Nombre");
 
         jLabel3.setText("Año");
 
         jLabel4.setText("Estado");
-
-        jtfCodigo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtfCodigoActionPerformed(evt);
-            }
-        });
-
-        jtfAño.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtfAñoActionPerformed(evt);
-            }
-        });
-
-        jtfNombre.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtfNombreActionPerformed(evt);
-            }
-        });
 
         jbBuscar.setText("Buscar");
         jbBuscar.addActionListener(new java.awt.event.ActionListener() {
@@ -194,129 +173,140 @@ public class FormularioMateria extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jtfCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfCodigoActionPerformed
-        
-   
-    }//GEN-LAST:event_jtfCodigoActionPerformed
-
-    private void jtfAñoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfAñoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtfAñoActionPerformed
-
-    private void jtfNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfNombreActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtfNombreActionPerformed
-
     private void jbBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbBuscarActionPerformed
-        
-        if(jtfCodigo.getText().isEmpty()){
-            JOptionPane.showMessageDialog(null, "Debe completar el campo Codigo");
-        } else{
+        //Si no completa el campo 'Código'
+        if (jtfCodigo.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Debe completar el campo Código");
             
-             try {
+        } else {
+
+            try {
+                //Asignamos a una variable el dato ingresado en la vista
                 int codigo = Integer.parseInt(jtfCodigo.getText());
+
+                //Instanciamos una materia y materiaData para usar luego
                 MateriaData md = new MateriaData();
                 Materia materiaBuscada = new Materia();
-                materiaBuscada = md.buscarMateria(codigo);
 
-                    jtfNombre.setText(materiaBuscada.getNombre());
-                    jtfAño.setText(Integer.toString(materiaBuscada.getAnio()));
-                    jrbEstado.setSelected(materiaBuscada.isActivo());
-                    jbEliminar.setEnabled(true);
-                    jbNuevo.setEnabled(true);
-                    
+                //Buscamos una materia por código usando buscar de materiaData
+                materiaBuscada = md.buscarMateria(codigo);
+                
+                //Mostramos en la vista los datos de la materia encontrada
+                jtfNombre.setText(materiaBuscada.getNombre());
+                jtfAño.setText(Integer.toString(materiaBuscada.getAnio()));
+                jrbEstado.setSelected(materiaBuscada.isActivo());
+                
+                //Habilitamos los botones 'Nuevo' y 'Eliminar'
+                jbNuevo.setEnabled(true);
+                jbEliminar.setEnabled(true);
+
             } catch (NumberFormatException nfe) {
+                //si ingresa letras o símbolos
                 JOptionPane.showMessageDialog(this, "Ingrese sólo números");
                 jtfCodigo.setText("");
-            } catch (NullPointerException npe){
-
+            } catch (NullPointerException npe) {
+                //si no existe materia con el código tipeado en la vista, salta el JOptionPane del método buscarMateria
             }
-            
         }
 
-        
     }//GEN-LAST:event_jbBuscarActionPerformed
 
     private void jbSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSalirActionPerformed
-        // Si elige Salir invisibiliza, deselecciona y cierra la ventana.
+        // Invisibiliza, deselecciona y cierra la ventana
         this.dispose();
- 
+
     }//GEN-LAST:event_jbSalirActionPerformed
 
     private void jbEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEliminarActionPerformed
+        //Si el campo Código está vacío
+        if (jtfCodigo.getText().isEmpty()) {
 
-        if(jtfCodigo.getText().isEmpty()){
-            
-            JOptionPane.showMessageDialog(null, "Complete el campo Codigo.");
-        } else{
-            
-            try{
+            JOptionPane.showMessageDialog(null, "Complete el campo 'Código'");
+        } else {
+
+            try {
+                //Instanciamos materia y materiaData para usar luego
                 Materia m = new Materia();
                 MateriaData md = new MateriaData();
                 
+                //Creamos una variable con el código tipeado en la vista
                 int codigo = Integer.parseInt(jtfCodigo.getText());
-                m= md.buscarMateria(codigo);
+                
+                //Buscamos la materia con ese código y lo enviamos a materia ya creada
+                m = md.buscarMateria(codigo);
+                
+                //Eliminamos la materia llamando al método eliminarMateria de materiaData
                 md.eliminarMateria(m.getIdMateria());
                 
+                //Limpiamos los campos de la vista
                 jtfCodigo.setText("");
                 jtfAño.setText("");
                 jtfNombre.setText("");
                 jrbEstado.setSelected(false);
-                jbEliminar.setEnabled(false);
-                jbNuevo.setEnabled(false);
                 
-            } catch( NumberFormatException ex){
-                JOptionPane.showMessageDialog(null, "Ingrese solo numeros");
+
+            } catch (NumberFormatException ex) {
+                //si no ingresa números enteros
+                JOptionPane.showMessageDialog(null, "Ingrese sólo números enteros");
             }
         }
     }//GEN-LAST:event_jbEliminarActionPerformed
 
     private void jbNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbNuevoActionPerformed
-      
-                jtfCodigo.setText("");
-                jtfAño.setText("");
-                jtfNombre.setText("");
-                jrbEstado.setSelected(false);
-                jbNuevo.setEnabled(false);
-                jbEliminar.setEnabled(false);
-                
+         //Limpia la pantalla para cargar una materia nueva
+         
+        jtfCodigo.setText("");
+        jtfAño.setText("");
+        jtfNombre.setText("");
+        jrbEstado.setSelected(false);  
+
     }//GEN-LAST:event_jbNuevoActionPerformed
 
     private void jbGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbGuardarActionPerformed
-
+        //Instanciamos materiaData para usar luego
         MateriaData md = new MateriaData();
 
-        try{
+        try {
+            //creamos las variables y asignamos los valores tipeados en la vista
+            int codigo = Integer.parseInt(jtfCodigo.getText());
+            String nombre = jtfNombre.getText();
+            int anio = Integer.parseInt(jtfAño.getText());
+            boolean estado = jrbEstado.isSelected();
+            //Instanciamos una materia con los parámetros anteriores
+            Materia m = new Materia(codigo,nombre,anio,estado);
             
-        
-        Materia m = new Materia(Integer.parseInt(jtfCodigo.getText()),jtfNombre.getText(),Integer.parseInt(jtfAño.getText()),jrbEstado.isSelected());
-        
-
-        boolean existeCodigo=false;
-        
-        for (Materia existingMateria : md.listarMateria()) {
-            //BUSCA SI LA MATERIA EXISTE DENTRO DEL LISTADO DE MATERIAS
-            if (existingMateria.getIdMateria() == m.getIdMateria()) {
-              
+            //declaramos una variable bandera por si ya existe el código tipeado en vista
+            boolean existeCodigo = false;
+            
+            //Recorremos la lista de materias existentes
+            for (Materia existingMateria : md.listarMateria()) {
                 
-                existeCodigo = true;  
-                break;
+//BUSCA SI LA MATERIA EXISTE DENTRO DEL LISTADO DE MATERIAS
+                if (existingMateria.getIdMateria() == m.getIdMateria()) {
+                    //Si existe la materia seteamos el id para poder acceder al método modificar; si no existe se activa la bandera más abajo 
+                    //m.setIdMateria(md.buscarMateria(m.getCodigo()).getIdMateria());
+                    existeCodigo = true;
+                    break;
+                }
             }
-        } 
-        //SI EXISTE LA MATERIA, ENTRA AL METODO MODIFICAR, SINO A GUARDAR
-        if(existeCodigo==true){
-            md.modificarMateria(m);
-        }else{
-            md.guardarMateria(m);
-        }       
-   
-        } catch(NullPointerException ex ){
-            JOptionPane.showMessageDialog(null, "Complete todos los campos");
-        }catch(NumberFormatException ex ){
-            JOptionPane.showMessageDialog(null, "Complete todos los campos");
+            //Si existe la materia usa el método modificarMateria; si no, guardarMateria
+            if (existeCodigo == true) {
+                md.modificarMateria(m);
+            } else {
+                md.guardarMateria(m);
+            }
+
+            //Habilitamos los botones 'Eliminar' y 'Nuevo'
+            jbEliminar.setEnabled(true);
+            jbNuevo.setEnabled(true);
+            
+        } catch (NullPointerException ex) {
+            JOptionPane.showMessageDialog(null, "Complete el campo 'Código'");
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(null,"Use sólo números enteros para 'Código'");
         }
 
-        
+
     }//GEN-LAST:event_jbGuardarActionPerformed
 
 
