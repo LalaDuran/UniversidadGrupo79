@@ -257,11 +257,11 @@ public class InscripcionData {
     
     
     public void actualizarNota(int id_alumno, int id_materia, double nota){
-        String sql = "UPDATE inscripcion SET nota = ? WHERE id_alumno=? AND id_materia = ?";
+        String sql = "UPDATE inscripcion SET nota = ? WHERE id_alumno = ? AND id_materia = ?";
         
         try {
             //Prepara el comando SQL
-            PreparedStatement ps = con.prepareStatement(sql);
+            PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             
              //Asignamos el valor a los parámetros dinámicos
             ps.setDouble(1, nota);
@@ -270,9 +270,11 @@ public class InscripcionData {
             
             //Ejecutamos el comando SQL que devuelve un entero; creamos variable
             int filas = ps.executeUpdate();
-            
+            System.out.println(id_alumno); 
+            System.out.println(id_materia);
             if(filas == 1){
                 JOptionPane.showMessageDialog(null, "nota actualizada");
+               
             }
             
             //Liberamos recursos
