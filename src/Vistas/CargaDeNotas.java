@@ -4,6 +4,7 @@ import AccesoADatos.AlumnoData;
 import AccesoADatos.InscripcionData;
 import Entidades.Alumno;
 import Entidades.Inscripcion;
+import Entidades.Materia;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -148,12 +149,12 @@ public class CargaDeNotas extends javax.swing.JInternalFrame {
         Alumno a = (Alumno) jcbSeleccionarAlumno.getSelectedItem();
         
         //Borramos las filas evitando repeticiones
-        borrarFilas();
+       borrarFilas();
         
         //Si es un alumno activo, carga las materias en las que está inscripto a la tabla
         if (a.isActivo()) {
             for (Inscripcion insc : inscData.obtenerInscripcionesPorAlumno(a.getIdAlumno())) {
-                modelo.addRow(new Object[]{insc.getIdInscripcion(), insc.getMateria().getNombre(), insc.getNota()});
+                modelo.addRow(new Object[]{insc.getMateria().getIdMateria(), insc.getMateria().getNombre(), insc.getNota()});
             }
         }
 
@@ -163,8 +164,34 @@ public class CargaDeNotas extends javax.swing.JInternalFrame {
     private void jbGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbGuardarActionPerformed
 
 
+        InscripcionData insc = new InscripcionData();
+        Alumno a = new Alumno();
+        a = (Alumno) jcbSeleccionarAlumno.getSelectedItem();
+        Materia m = new Materia();
+        
+        //Creamos una variable con la materia seleccionada en la vista
+        int filaSeleccionada = jtTablaNotas.getSelectedRow();
+
+        //Seteamos los atributos a la materia antes instanciada
+        m.setIdMateria((int) jtTablaNotas.getValueAt(filaSeleccionada, 0));
+        
+        String valor = jtTablaNotas.getValueAt(filaSeleccionada, 2).toString();
+        a.toString();
+        try {
+            double d = Double.parseDouble(valor);
+            // Ahora 'd' contiene el valor numérico.
+
+            
+            insc.actualizarNota(a.getIdAlumno(), m.getIdMateria(), d);
+            // Aquí puedes usar 'd' en tu lógica.
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(null, "La celda debe contener un número");
+        }
+
+            
     }//GEN-LAST:event_jbGuardarActionPerformed
 
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
@@ -179,7 +206,7 @@ public class CargaDeNotas extends javax.swing.JInternalFrame {
     private void armarTabla() {
         
         //Agregamos las cabeceras a la tabla
-        modelo.addColumn("codigo");
+        modelo.addColumn("Id");
         modelo.addColumn("nombre");
         modelo.addColumn("nota");
         
@@ -214,12 +241,8 @@ public class CargaDeNotas extends javax.swing.JInternalFrame {
     }
 
     private void borrarFilas() {
-        
-        //Evita la repetición de las filas en la tabla
-        int f = jtTablaNotas.getRowCount() - 1;
-        for (; f >= 0; f--) {
-            modelo.removeRow(f);
-        }
-
+    while (modelo.getRowCount() > 0) {
+        modelo.removeRow(0);
     }
+}
 }
