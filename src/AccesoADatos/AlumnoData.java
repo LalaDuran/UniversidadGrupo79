@@ -59,7 +59,7 @@ public class AlumnoData {
     }
     
     public void modificarAlumno(Alumno alumno) {
-        String sql = "UPDATE alumno SET apellido = ?, nombre = ?, fecha_nac= ? WHERE id_alumno = ?";
+        String sql = "UPDATE alumno SET apellido = ?, nombre = ?, fecha_nac= ?, estado = ? WHERE id_alumno = ?";
         
         try {
             //Prepara el comando SQL
@@ -69,14 +69,14 @@ public class AlumnoData {
             ps.setString(1, alumno.getApellido());
             ps.setString(2, alumno.getNombre());
             ps.setDate(3,Date.valueOf(alumno.getFechaNacim()));   
-            ps.setInt(4, alumno.getIdAlumno());
-            ps.setInt(5, alumno.getDni());
+            ps.setBoolean(4, alumno.isActivo());
+            ps.setInt(5, alumno.getIdAlumno());
+            ps.setInt(6, alumno.getDni());
            
             //Ejecutamos el comando SQL que devuelve un entero; creamos variable
             int exito = ps.executeUpdate();
             
             if(exito ==1){
-                System.out.println(" da"); //YA SE PUEDE SACAR?
                 JOptionPane.showMessageDialog(null, "Alumno modificado");
             }
             

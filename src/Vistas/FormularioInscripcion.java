@@ -59,6 +59,12 @@ public class FormularioInscripcion extends javax.swing.JInternalFrame {
 
         jLabel1.setText("Seleccione un alumno");
 
+        jcbSeleccionarAlumno.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbSeleccionarAlumnoActionPerformed(evt);
+            }
+        });
+
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("Listado de Materias");
@@ -212,6 +218,7 @@ public class FormularioInscripcion extends javax.swing.JInternalFrame {
         for (Materia aux : id.obtenerMateriasCursadas(a.getIdAlumno())) {
             modelo.addRow(new Object[]{aux.getIdMateria(), aux.getNombre(), aux.getAnio()});
         }
+        
     }//GEN-LAST:event_jrbMatInscriptasActionPerformed
 
     private void jrbMatNOInscriptasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrbMatNOInscriptasActionPerformed
@@ -285,6 +292,15 @@ public class FormularioInscripcion extends javax.swing.JInternalFrame {
         modelo.removeRow(filaSeleccionada);
     }//GEN-LAST:event_jbAnularInscActionPerformed
 
+    private void jcbSeleccionarAlumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbSeleccionarAlumnoActionPerformed
+
+        //Utilizamos el cambio de alumno para borrar la consulta anterior
+        borrarFilas();
+        jrbMatInscriptas.setSelected(false);
+        jrbMatNOInscriptas.setSelected(false);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jcbSeleccionarAlumnoActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
@@ -330,9 +346,8 @@ public class FormularioInscripcion extends javax.swing.JInternalFrame {
 
     private void borrarFilas() {
         //Evita la repetición de las filas en la tabla
-        int f = jTablaMaterias.getRowCount() - 1;
-        for (; f >= 0; f--) {
-            modelo.removeRow(f);
+        while (modelo.getRowCount() > 0) {
+            modelo.removeRow(0);
         }
     }
 

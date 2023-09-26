@@ -56,7 +56,7 @@ public class MateriaData {
     
     
     public void modificarMateria(Materia materia){
-        String sql = "UPDATE materia SET nombre = ?, anio = ? WHERE id_materia = ?";
+        String sql = "UPDATE materia SET nombre = ?, anio = ?, estado = ? WHERE id_materia = ?";
         
         try {
             //Prepara el comando SQL
@@ -65,7 +65,8 @@ public class MateriaData {
             //Asignamos los valores a los parámetros dinámicos
             ps.setString(1, materia.getNombre());
             ps.setInt(2, materia.getAnio());
-            ps.setInt(3, materia.getIdMateria());
+            ps.setBoolean(3, materia.isActivo());
+            ps.setInt(4, materia.getIdMateria());
             
             //Ejecutamos el comando SQL que devuelve un entero; creamos variable
             int exito = ps.executeUpdate();
