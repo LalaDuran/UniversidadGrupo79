@@ -24,13 +24,12 @@ public class CargaDeNotas extends javax.swing.JInternalFrame {
         }
     };
 
-    
     public CargaDeNotas() {
         initComponents();
-        
+
         //Carga los alumnos al jComboBox
         cargarAlumnos();
-        
+
         //Carga la estructura de la tabla
         armarTabla();
     }
@@ -144,13 +143,13 @@ public class CargaDeNotas extends javax.swing.JInternalFrame {
     private void jcbSeleccionarAlumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbSeleccionarAlumnoActionPerformed
         //Instanciamos inscripcionData para usar luego
         InscripcionData inscData = new InscripcionData();
-                
+
         //Creamos un alumno y le asignamos el alumno seleccionado en la vista
         Alumno a = (Alumno) jcbSeleccionarAlumno.getSelectedItem();
-        
+
         //Borramos las filas evitando repeticiones
-       borrarFilas();
-        
+        borrarFilas();
+
         //Si es un alumno activo, carga las materias en las que está inscripto a la tabla
         if (a.isActivo()) {
             for (Inscripcion insc : inscData.obtenerInscripcionesPorAlumno(a.getIdAlumno())) {
@@ -163,35 +162,38 @@ public class CargaDeNotas extends javax.swing.JInternalFrame {
 
     private void jbGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbGuardarActionPerformed
 
-
-        InscripcionData insc = new InscripcionData();
+        //Instanciamos para usar luego
+        InscripcionData inscData = new InscripcionData();
         Alumno a = new Alumno();
-        a = (Alumno) jcbSeleccionarAlumno.getSelectedItem();
         Materia m = new Materia();
+        
+        //Asignamos al alumno instanciado el seleccionado en la vista
+        a = (Alumno) jcbSeleccionarAlumno.getSelectedItem();
         
         //Creamos una variable con la materia seleccionada en la vista
         int filaSeleccionada = jtTablaNotas.getSelectedRow();
 
         //Seteamos los atributos a la materia antes instanciada
         m.setIdMateria((int) jtTablaNotas.getValueAt(filaSeleccionada, 0));
-        
-        String valor = jtTablaNotas.getValueAt(filaSeleccionada, 2).toString();
-        a.toString();
-        try {
-            double d = Double.parseDouble(valor);
-            // Ahora 'd' contiene el valor numérico.
 
+        //Asignamos el valor de la vista en String
+        String valor = jtTablaNotas.getValueAt(filaSeleccionada, 2).toString();
+        
+        //a.toString();
+        
+        try {
+            //Pasamos valor de String a double
+            double d = Double.parseDouble(valor);
             
-            insc.actualizarNota(a.getIdAlumno(), m.getIdMateria(), d);
-            // Aquí puedes usar 'd' en tu lógica.
+            //Llamamos al método que actualizará la nota
+            inscData.actualizarNota(a.getIdAlumno(), m.getIdMateria(), d);
+            
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(null, "La celda debe contener un número");
         }
 
-            
     }//GEN-LAST:event_jbGuardarActionPerformed
 
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
@@ -204,18 +206,18 @@ public class CargaDeNotas extends javax.swing.JInternalFrame {
     // End of variables declaration//GEN-END:variables
 
     private void armarTabla() {
-        
+
         //Agregamos las cabeceras a la tabla
         modelo.addColumn("Id");
         modelo.addColumn("nombre");
         modelo.addColumn("nota");
-        
+
         //Seteamos el modelo a la tabla
         jtTablaNotas.setModel(modelo);
-        
+
         //Impedimos el reordenamiento de la cabecera
         jtTablaNotas.getTableHeader().setReorderingAllowed(false);
-        
+
         //para centrar las celdas del encabezado
         DefaultTableCellRenderer header = (DefaultTableCellRenderer) jtTablaNotas.getTableHeader().getDefaultRenderer();
         header.setHorizontalAlignment(SwingConstants.CENTER);
@@ -231,7 +233,7 @@ public class CargaDeNotas extends javax.swing.JInternalFrame {
     }
 
     private void cargarAlumnos() {
-        
+
         //Cargamos los alumnos al jComboBox
         AlumnoData ad = new AlumnoData();
 
@@ -241,8 +243,10 @@ public class CargaDeNotas extends javax.swing.JInternalFrame {
     }
 
     private void borrarFilas() {
-    while (modelo.getRowCount() > 0) {
-        modelo.removeRow(0);
+
+        //Evita la repetición de las filas en la tabla
+        while (modelo.getRowCount() > 0) {
+            modelo.removeRow(0);
+        }
     }
-}
 }

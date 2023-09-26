@@ -1,24 +1,20 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package Vistas;
 
-/**
- *
- * @author morena
- */
+import javax.swing.JOptionPane;
+
+
 public class MenuPrincipal extends javax.swing.JFrame {
 
-    /**
-     * Creates new form MenuPrincipal
-     */
     public MenuPrincipal() {
         initComponents();
-        this.setLocationRelativeTo(null);
-        this.setResizable(false);
         
+        //Abre la ventana del menú en el centro
+        this.setLocationRelativeTo(null);
+        
+        //Impide que se modifique el tamaño de la ventana
+        this.setResizable(false);
+
     }
 
     /**
@@ -130,9 +126,9 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jMenuBar1.add(jMenu4);
 
         jMenu5.setText("Salir");
-        jMenu5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenu5ActionPerformed(evt);
+        jMenu5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenu5MouseClicked(evt);
             }
         });
         jMenuBar1.add(jMenu5);
@@ -160,54 +156,54 @@ public class MenuPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jmiFormularioMateriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiFormularioMateriaActionPerformed
-        Escritorio.removeAll();
-        Escritorio.repaint();
-        FormularioMateria fm = new FormularioMateria();
-        fm.setVisible(true);
-        Escritorio.add(fm);
-        Escritorio.moveToFront(fm);
+        Escritorio.removeAll(); //para que cierre las ventanas que pudieran estar abiertas
+        Escritorio.repaint(); //para que lo redibuje
+        FormularioMateria fm = new FormularioMateria(); //instancia la ventana (aún invis.)
+        fm.setVisible(true); //la hace visible
+        Escritorio.add(fm); //la agrega al escritorio
+        Escritorio.moveToFront(fm); //la abre y trae adelante
     }//GEN-LAST:event_jmiFormularioMateriaActionPerformed
 
     private void jmiManejoInsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiManejoInsActionPerformed
-        Escritorio.removeAll();
-        Escritorio.repaint();
-        FormularioInscripcion fi = new FormularioInscripcion();
-        fi.setVisible(true);
-        Escritorio.add(fi);
-        Escritorio.moveToFront(fi);
+        Escritorio.removeAll(); //para que cierre las ventanas que pudieran estar abiertas
+        Escritorio.repaint(); //para que lo redibuje
+        FormularioInscripcion fi = new FormularioInscripcion(); //inst. la ventana (invis.)
+        fi.setVisible(true); //la hace visible
+        Escritorio.add(fi); //la agrega al escritorio
+        Escritorio.moveToFront(fi); //la abre y trae adelante
     }//GEN-LAST:event_jmiManejoInsActionPerformed
 
     private void jmiManejoNotasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiManejoNotasActionPerformed
-        Escritorio.removeAll();
-        Escritorio.repaint();
-        CargaDeNotas cdn = new CargaDeNotas();
-        cdn.setVisible(true);
-        Escritorio.add(cdn);
-        Escritorio.moveToFront(cdn);
+        Escritorio.removeAll(); //para que cierre las ventanas ue pudieran estar abiertas
+        Escritorio.repaint(); //para que lo redibuje
+        CargaDeNotas cdn = new CargaDeNotas(); //instancia la ventana (aún invisible)
+        cdn.setVisible(true); //la hace visible
+        Escritorio.add(cdn); //la agrega al escritorio
+        Escritorio.moveToFront(cdn); //la abre y trae adelante
     }//GEN-LAST:event_jmiManejoNotasActionPerformed
 
     private void jmiAlumnosPorMatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiAlumnosPorMatActionPerformed
-        Escritorio.removeAll();
-        Escritorio.repaint();
-        ListadoAlumnosPorMateria lam = new ListadoAlumnosPorMateria();
-        lam.setVisible(true);
-        Escritorio.add(lam);
-        Escritorio.moveToFront(lam);
+        Escritorio.removeAll(); //para que cierre las ventanas que pudieran estar abiertas
+        Escritorio.repaint(); //para que lo redibuje
+        ListadoAlumnosPorMateria lam = new ListadoAlumnosPorMateria(); //inst.la ventana
+        lam.setVisible(true); //la hace visible
+        Escritorio.add(lam); //la agrega al escritorio
+        Escritorio.moveToFront(lam); //la abre y trae adelante
     }//GEN-LAST:event_jmiAlumnosPorMatActionPerformed
 
     private void jmiFormularioAlumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiFormularioAlumnoActionPerformed
-        Escritorio.removeAll();
-        Escritorio.repaint();
-        FormularioAlumno fa = new FormularioAlumno();
-        fa.setVisible(true);
-        Escritorio.add(fa);
-        Escritorio.moveToFront(fa);
+        Escritorio.removeAll(); //para que cierre las ventanas que pudieran estar abiertas
+        Escritorio.repaint(); //para que lo redibuje
+        FormularioAlumno fa = new FormularioAlumno(); //instancia la ventana (aún invis.)
+        fa.setVisible(true); //la hace visible
+        Escritorio.add(fa); //la agrega al escritorio
+        Escritorio.moveToFront(fa); //la abre y trae adelante
     }//GEN-LAST:event_jmiFormularioAlumnoActionPerformed
 
-    private void jMenu5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu5ActionPerformed
-        
-        System.exit(0);
-    }//GEN-LAST:event_jMenu5ActionPerformed
+    private void jMenu5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu5MouseClicked
+       //Llama al método para cerrar la aplicación completa
+        cerrar();
+    }//GEN-LAST:event_jMenu5MouseClicked
 
     /**
      * @param args the command line arguments
@@ -260,4 +256,18 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jmiManejoIns;
     private javax.swing.JMenuItem jmiManejoNotas;
     // End of variables declaration//GEN-END:variables
+
+    public void cerrar() {
+        
+        //Establece los nombre de los dos botones del JOptionPane
+        String botones[] = {"Cerrar", "Cancelar"};
+        
+        //Asigna el JOptionPane a una variable y si elige 'si'...
+        int eleccion = JOptionPane.showOptionDialog(this, "¿Desea cerrar la aplicación?", "Salir", 0, 0, null, botones, this);
+        
+        if (eleccion == JOptionPane.YES_OPTION) {
+            System.exit(0);
+        }
+    }
+
 }

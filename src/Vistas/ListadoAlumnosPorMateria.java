@@ -1,35 +1,32 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Vistas;
 
-import AccesoADatos.AlumnoData;
 import AccesoADatos.InscripcionData;
 import AccesoADatos.MateriaData;
 import Entidades.Alumno;
-import Entidades.Inscripcion;
 import Entidades.Materia;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author morena
- */
 public class ListadoAlumnosPorMateria extends javax.swing.JInternalFrame {
- private final DefaultTableModel modelo = new DefaultTableModel() {
+
+    //Cargamos el modelo de tabla
+    private final DefaultTableModel modelo = new DefaultTableModel() {
+        //Hacemos la tabla no-editable en todas sus celdas
         public boolean isCellEditable(int f, int c) {
             return false;
         }
     };
- 
+
     public ListadoAlumnosPorMateria() {
         initComponents();
-        armarTabla();
+        
+        //Carga las materias al jComboBox
         cargarMaterias();
+        
+        //Carga la estructura de la tabla
+        armarTabla();
+        
     }
 
     /**
@@ -124,28 +121,29 @@ public class ListadoAlumnosPorMateria extends javax.swing.JInternalFrame {
 
     private void jbSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSalirActionPerformed
 
+        //Deselecciona, invisibiliza y cierra la ventana
         this.dispose();
-        // TODO add your handling code here:
+       
     }//GEN-LAST:event_jbSalirActionPerformed
 
     private void jcbSeleccionarMateriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbSeleccionarMateriaActionPerformed
 
-          //Instanciamos inscripcionData para usar luego
+        //Instanciamos inscripcionData para usar luego
         InscripcionData inscData = new InscripcionData();
-                
-        //Creamos un alumno y le asignamos el alumno seleccionado en la vista
+
+        //Creamos una materia y le asignamos la seleccionada en la vista
         Materia m = (Materia) jcbSeleccionarMateria.getSelectedItem();
-        
+
         //Borramos las filas evitando repeticiones
-       borrarFilas();
-        
-        //Si una materia esta activa, carga sus alumnos
+        borrarFilas();
+
+        //Si una materia esta activa, carga sus alumnos en la tabla
         if (m.isActivo()) {
-            for (Alumno alu : inscData.obtenerAlumnosPorMateria(m.getIdMateria())){
-                modelo.addRow(new Object[]{alu.getIdAlumno(), alu.getDni(),alu.getApellido(),alu.getNombre()});
+            for (Alumno alu : inscData.obtenerAlumnosPorMateria(m.getIdMateria())) {
+                modelo.addRow(new Object[]{alu.getIdAlumno(), alu.getDni(), alu.getApellido(), alu.getNombre()});
             }
         }
-        // TODO add your handling code here:
+       
     }//GEN-LAST:event_jcbSeleccionarMateriaActionPerformed
 
 
@@ -158,20 +156,20 @@ public class ListadoAlumnosPorMateria extends javax.swing.JInternalFrame {
     private javax.swing.JTable jtTablaAlumnosPorMat;
     // End of variables declaration//GEN-END:variables
 
- private void armarTabla() {
-        
+    private void armarTabla() {
+
         //Agregamos las cabeceras a la tabla
         modelo.addColumn("Id Alumno");
         modelo.addColumn("DNI");
         modelo.addColumn("Apellido");
         modelo.addColumn("Nombre");
-        
+
         //Seteamos el modelo a la tabla
         jtTablaAlumnosPorMat.setModel(modelo);
-        
+
         //Impedimos el reordenamiento de la cabecera
         jtTablaAlumnosPorMat.getTableHeader().setReorderingAllowed(false);
-        
+
         //para centrar las celdas del encabezado
         DefaultTableCellRenderer header = (DefaultTableCellRenderer) jtTablaAlumnosPorMat.getTableHeader().getDefaultRenderer();
         header.setHorizontalAlignment(SwingConstants.CENTER);
@@ -185,22 +183,26 @@ public class ListadoAlumnosPorMateria extends javax.swing.JInternalFrame {
         tcr0.setHorizontalAlignment(SwingConstants.CENTER);
         jtTablaAlumnosPorMat.getColumnModel().getColumn(1).setCellRenderer(tcr0);
     }
- private void cargarMaterias(){
-     
-      MateriaData md = new MateriaData();
+
+    private void cargarMaterias() {
+        
+        //Cargamos las materias al jComboBox
+        MateriaData md = new MateriaData();
 
         for (Materia item : md.listarMateria()) {
             jcbSeleccionarMateria.addItem(item);
         }
     }
- 
-   private void borrarFilas() {
-    while (modelo.getRowCount() > 0) {
-        modelo.removeRow(0);
+
+    private void borrarFilas() {
+        
+        //Evita la repetición de las filas en la tabla
+        while (modelo.getRowCount() > 0) {
+            modelo.removeRow(0);
+        }
     }
+
+    
+    
+    
 }
-     
- }
-
-
-
