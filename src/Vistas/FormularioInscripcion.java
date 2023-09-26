@@ -187,10 +187,8 @@ public class FormularioInscripcion extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSalirActionPerformed
-
         //Invisibiliza, deselecciona y cierra la ventana
         this.dispose();
-
     }//GEN-LAST:event_jbSalirActionPerformed
 
     private void jrbMatInscriptasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrbMatInscriptasActionPerformed
@@ -212,11 +210,8 @@ public class FormularioInscripcion extends javax.swing.JInternalFrame {
         
         //Listamos las materias en la tabla
         for (Materia aux : id.obtenerMateriasCursadas(a.getIdAlumno())) {
-
             modelo.addRow(new Object[]{aux.getIdMateria(), aux.getNombre(), aux.getAnio()});
         }
-
-
     }//GEN-LAST:event_jrbMatInscriptasActionPerformed
 
     private void jrbMatNOInscriptasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrbMatNOInscriptasActionPerformed
@@ -238,7 +233,6 @@ public class FormularioInscripcion extends javax.swing.JInternalFrame {
         
         //Listamos las materias en la tabla
         for (Materia aux : id.obtenerMateriasNoCursadas(a.getIdAlumno())) {
-
             modelo.addRow(new Object[]{aux.getIdMateria(), aux.getNombre(), aux.getAnio()});
         }
 
@@ -267,11 +261,9 @@ public class FormularioInscripcion extends javax.swing.JInternalFrame {
         
         //Quitamos la 'fila' de la materia recién inscripta
         modelo.removeRow(filaSeleccionada);
-
     }//GEN-LAST:event_jbInscribirActionPerformed
 
     private void jbAnularInscActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAnularInscActionPerformed
-
         //Instanciamos inscripcionData, alumno y materia para usar luego
         InscripcionData inscData = new InscripcionData();
         Materia m = new Materia();
@@ -291,7 +283,6 @@ public class FormularioInscripcion extends javax.swing.JInternalFrame {
         
         //Quitamos la 'fila' de la materia cuya inscripción recién borramos
         modelo.removeRow(filaSeleccionada);
-
     }//GEN-LAST:event_jbAnularInscActionPerformed
 
 
@@ -312,7 +303,6 @@ public class FormularioInscripcion extends javax.swing.JInternalFrame {
     // End of variables declaration//GEN-END:variables
 
     private void armarTabla() {
-        
         //Agregamos las cabeceras a la tabla
         modelo.addColumn("id");
         modelo.addColumn("nombre");
@@ -339,17 +329,14 @@ public class FormularioInscripcion extends javax.swing.JInternalFrame {
     }
 
     private void borrarFilas() {
-        
         //Evita la repetición de las filas en la tabla
         int f = jTablaMaterias.getRowCount() - 1;
         for (; f >= 0; f--) {
             modelo.removeRow(f);
         }
-
     }
 
     private void cargarAlumnos() {
-        
         //Cargamos los alumnos al jComboBox
         AlumnoData ad = new AlumnoData();
 
@@ -359,7 +346,6 @@ public class FormularioInscripcion extends javax.swing.JInternalFrame {
     }
 
     private void cargarMaterias() {
-        
         //Cargamos las materias a la tabla
         MateriaData md = new MateriaData();
 

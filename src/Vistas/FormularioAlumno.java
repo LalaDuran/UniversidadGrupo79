@@ -16,7 +16,6 @@ public class FormularioAlumno extends javax.swing.JInternalFrame {
         //Inhabilita los botones 'Nuevo' y 'Eliminar'
         jbNuevo.setEnabled(false);
         jbEliminar.setEnabled(false);
-
     }
 
     /**
@@ -183,7 +182,6 @@ public class FormularioAlumno extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "Debe completar el campo 'Documento'");
 
         } else {
-
             try {
                 //Asignamos a una variable el dato ingresado en la vista
                 int dniBuscado = Integer.parseInt(jtfDocumento.getText());
@@ -208,6 +206,7 @@ public class FormularioAlumno extends javax.swing.JInternalFrame {
                 LocalDate localDate = alumnoBuscado.getFechaNacim();
                 //local date + atStartOfDay() + default time zone + toInstant() = Date
                 jdcFechaNac.setDate(Date.from(localDate.atStartOfDay(defaultZoneId).toInstant()));
+                
                 //Habilitamos los botones 'Nuevo' y 'Eliminar'
                 jbNuevo.setEnabled(true);
                 jbEliminar.setEnabled(true);
@@ -225,27 +224,24 @@ public class FormularioAlumno extends javax.swing.JInternalFrame {
 
     private void jbNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbNuevoActionPerformed
         //Limpia la pantalla para cargar un alumno nuevo
-
         jtfApellido.setText("");
         jtfNombre.setText("");
         jtfDocumento.setText("");
         jrbEstado.setSelected(false);
         jdcFechaNac.setCalendar(null);
-
-
     }//GEN-LAST:event_jbNuevoActionPerformed
 
     private void jbEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEliminarActionPerformed
         //Si el campo Código está vacío
         if (jtfDocumento.getText().isEmpty()) {
-
             JOptionPane.showMessageDialog(null, "Complete el campo 'Documento'");
+            
         } else {
-
             try {
                 //Instanciamos alumno y alumnoData para usar luego
                 Alumno a = new Alumno();
                 AlumnoData ad = new AlumnoData();
+                
                 //Creamos una variable con el documento tipeado en la vista
                 int dni = Integer.parseInt(jtfDocumento.getText());
 
@@ -266,7 +262,6 @@ public class FormularioAlumno extends javax.swing.JInternalFrame {
                 JOptionPane.showMessageDialog(null, "Ingrese un DNI");
             }
         }
-
     }//GEN-LAST:event_jbEliminarActionPerformed
 
     private void jbGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbGuardarActionPerformed
@@ -281,6 +276,7 @@ public class FormularioAlumno extends javax.swing.JInternalFrame {
             Date date = jdcFechaNac.getDate();
             LocalDate ld = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
             boolean estado = jrbEstado.isSelected();
+            
             //Instanciamos un alumno con los parámetros anteriores
             Alumno a = new Alumno(dni, apellido, nombre, ld, estado);
 
@@ -315,13 +311,11 @@ public class FormularioAlumno extends javax.swing.JInternalFrame {
             //Si no usa números enteros en Documento
             JOptionPane.showMessageDialog(null,"Use sólo números enteros para 'Documento'");
         }
-
     }//GEN-LAST:event_jbGuardarActionPerformed
 
     private void jbSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSalirActionPerformed
         //Invisibiliza, deselecciona y cierra la ventana
         this.dispose();
-
     }//GEN-LAST:event_jbSalirActionPerformed
 
 

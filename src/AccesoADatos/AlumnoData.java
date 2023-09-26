@@ -24,7 +24,6 @@ public class AlumnoData {
     }
     
     public void guardarAlumno(Alumno alumno){
-        
         String sql = "INSERT INTO alumno (dni,apellido,nombre,fecha_nac,estado)"
                 + "VALUES (?,?,?,?,?)";
         
@@ -55,10 +54,8 @@ public class AlumnoData {
             ps.close();
     
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null,"Error al acceder a la tabla alumno");
-            
-        } 
-        
+            JOptionPane.showMessageDialog(null,"Error al acceder a la tabla alumno");    
+        }   
     }
     
     public void modificarAlumno(Alumno alumno) {
@@ -79,7 +76,7 @@ public class AlumnoData {
             int exito = ps.executeUpdate();
             
             if(exito ==1){
-                System.out.println(" da");
+                System.out.println(" da"); //YA SE PUEDE SACAR?
                 JOptionPane.showMessageDialog(null, "Alumno modificado");
             }
             
@@ -113,13 +110,11 @@ public class AlumnoData {
             ps.close();
             
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla alumno");
-            
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla alumno");   
         }
     }
     
     public void actualizarAlumno(int id){
-        
         String sql = "UPDATE alumno SET estado = 1 "
                 + "WHERE id_alumno = ? ";
         
@@ -141,8 +136,7 @@ public class AlumnoData {
             ps.close();
             
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla alumno");
-            
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla alumno");  
         }
     }
     
@@ -181,7 +175,6 @@ public class AlumnoData {
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null,"Error al acceder a la tabla");
         }
-        
         return alumnoABuscar;
     }
     
@@ -223,7 +216,6 @@ public class AlumnoData {
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null,"Error al acceder a la tabla");
         }
-        
         return alumnoABuscar;
     }
     
@@ -253,7 +245,6 @@ public class AlumnoData {
                 
                 //Agregamos el alumno al arraylist
                 alumnos.add(alumnoABuscar);
-       
             } 
             
             //Liberamos recursos
@@ -262,10 +253,6 @@ public class AlumnoData {
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null,"Error al acceder a la tabla");
         }
-        
         return alumnos;
-        
-    }
-    
-    
+    }   
 }

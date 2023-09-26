@@ -26,7 +26,6 @@ public class ListadoAlumnosPorMateria extends javax.swing.JInternalFrame {
         
         //Carga la estructura de la tabla
         armarTabla();
-        
     }
 
     /**
@@ -120,14 +119,11 @@ public class ListadoAlumnosPorMateria extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSalirActionPerformed
-
         //Deselecciona, invisibiliza y cierra la ventana
         this.dispose();
-       
     }//GEN-LAST:event_jbSalirActionPerformed
 
     private void jcbSeleccionarMateriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbSeleccionarMateriaActionPerformed
-
         //Instanciamos inscripcionData para usar luego
         InscripcionData inscData = new InscripcionData();
 
@@ -143,7 +139,6 @@ public class ListadoAlumnosPorMateria extends javax.swing.JInternalFrame {
                 modelo.addRow(new Object[]{alu.getIdAlumno(), alu.getDni(), alu.getApellido(), alu.getNombre()});
             }
         }
-       
     }//GEN-LAST:event_jcbSeleccionarMateriaActionPerformed
 
 
@@ -157,7 +152,6 @@ public class ListadoAlumnosPorMateria extends javax.swing.JInternalFrame {
     // End of variables declaration//GEN-END:variables
 
     private void armarTabla() {
-
         //Agregamos las cabeceras a la tabla
         modelo.addColumn("Id Alumno");
         modelo.addColumn("DNI");
@@ -185,7 +179,6 @@ public class ListadoAlumnosPorMateria extends javax.swing.JInternalFrame {
     }
 
     private void cargarMaterias() {
-        
         //Cargamos las materias al jComboBox
         MateriaData md = new MateriaData();
 
@@ -195,14 +188,9 @@ public class ListadoAlumnosPorMateria extends javax.swing.JInternalFrame {
     }
 
     private void borrarFilas() {
-        
         //Evita la repetición de las filas en la tabla
         while (modelo.getRowCount() > 0) {
             modelo.removeRow(0);
         }
-    }
-
-    
-    
-    
+    } 
 }

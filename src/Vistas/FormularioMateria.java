@@ -7,21 +7,14 @@ import javax.swing.JOptionPane;
 public class FormularioMateria extends javax.swing.JInternalFrame {
 
     public FormularioMateria() {
-
         initComponents();
 
-      
         jbEliminar.setEnabled(false);
         jbNuevo.setEnabled(false);
-        
-        
-
         
         //Inhabilita los botones 'Nuevo' y 'Eliminar'
         jbNuevo.setEnabled(false);
         jbEliminar.setEnabled(false);
-
-
     }
 
     /**
@@ -179,7 +172,6 @@ public class FormularioMateria extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, "Debe completar el campo Código");
             
         } else {
-
             try {
                 //Asignamos a una variable el dato ingresado en la vista
                 int codigo = Integer.parseInt(jtfCodigo.getText());
@@ -208,22 +200,19 @@ public class FormularioMateria extends javax.swing.JInternalFrame {
                 //si no existe materia con el código tipeado en la vista, salta el JOptionPane del método buscarMateria
             }
         }
-
     }//GEN-LAST:event_jbBuscarActionPerformed
 
     private void jbSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSalirActionPerformed
         // Invisibiliza, deselecciona y cierra la ventana
         this.dispose();
-
     }//GEN-LAST:event_jbSalirActionPerformed
 
     private void jbEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEliminarActionPerformed
         //Si el campo Código está vacío
         if (jtfCodigo.getText().isEmpty()) {
-
             JOptionPane.showMessageDialog(null, "Complete el campo 'Código'");
+            
         } else {
-
             try {
                 //Instanciamos materia y materiaData para usar luego
                 Materia m = new Materia();
@@ -244,7 +233,6 @@ public class FormularioMateria extends javax.swing.JInternalFrame {
                 jtfNombre.setText("");
                 jrbEstado.setSelected(false);
                 
-
             } catch (NumberFormatException ex) {
                 //si no ingresa números enteros
                 JOptionPane.showMessageDialog(null, "Ingrese sólo números enteros");
@@ -254,12 +242,10 @@ public class FormularioMateria extends javax.swing.JInternalFrame {
 
     private void jbNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbNuevoActionPerformed
          //Limpia la pantalla para cargar una materia nueva
-         
         jtfCodigo.setText("");
         jtfAño.setText("");
         jtfNombre.setText("");
-        jrbEstado.setSelected(false);  
-
+        jrbEstado.setSelected(false);
     }//GEN-LAST:event_jbNuevoActionPerformed
 
     private void jbGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbGuardarActionPerformed
@@ -281,7 +267,7 @@ public class FormularioMateria extends javax.swing.JInternalFrame {
             //Recorremos la lista de materias existentes
             for (Materia existingMateria : md.listarMateria()) {
                 
-//BUSCA SI LA MATERIA EXISTE DENTRO DEL LISTADO DE MATERIAS
+                //BUSCA SI LA MATERIA EXISTE DENTRO DEL LISTADO DE MATERIAS
                 if (existingMateria.getIdMateria() == m.getIdMateria()) {
                     //Si existe la materia seteamos el id para poder acceder al método modificar; si no existe se activa la bandera más abajo 
                     //m.setIdMateria(md.buscarMateria(m.getCodigo()).getIdMateria());
@@ -305,8 +291,6 @@ public class FormularioMateria extends javax.swing.JInternalFrame {
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(null,"Use sólo números enteros para 'Código'");
         }
-
-
     }//GEN-LAST:event_jbGuardarActionPerformed
 
 

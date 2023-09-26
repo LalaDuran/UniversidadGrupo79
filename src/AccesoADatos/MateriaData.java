@@ -19,8 +19,7 @@ public class MateriaData {
     private Connection con = null;
     
     public MateriaData(){
-        con = Conexion.getConexion();
-        
+        con = Conexion.getConexion(); 
     }
     
     public void guardarMateria(Materia materia){
@@ -52,8 +51,7 @@ public class MateriaData {
             
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla");
-        }
-        
+        } 
     }
     
     
@@ -138,7 +136,6 @@ public class MateriaData {
     
      
     public Materia buscarMateria(int id){
-        
         //Decidimos sacar 'estado' del WHERE para poder acceder a materias activas e inactivas
         String sql = "SELECT nombre, anio FROM materia WHERE id_materia = ? ";
         
@@ -173,9 +170,7 @@ public class MateriaData {
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla");
         }
-            
-        return materiaABuscar;
-         
+        return materiaABuscar; 
     }
     
     
@@ -210,8 +205,6 @@ public class MateriaData {
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla");
         }
-            
-        return materias;
-         
+        return materias;     
     }
 }

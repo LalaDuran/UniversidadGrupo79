@@ -28,9 +28,6 @@ public class Conexion {
                 JOptionPane.showMessageDialog(null, "Error al conectarse a la base de datos");
             }
         }
-        
-        return connection;
-        
-    }
-    
+        return connection;   
+    } 
 }

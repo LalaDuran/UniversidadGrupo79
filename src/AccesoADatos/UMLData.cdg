@@ -31,7 +31,7 @@
         <Method name="listarAlumno" returnType="Lis&lt;Alumno&gt;" visibility="public"/>
       </Methods>
     </Class>
-    <Class name="InscripcionData" package="" visibility="public" xPosition="357.0" yPosition="302.0">
+    <Class name="InscripcionData" package="" visibility="public" xPosition="396.0" yPosition="303.0">
       <Fields>
         <Field name="con" type="Connection" visibility="private"/>
         <Field name="matData" type="MateriaData" visibility="private"/>
@@ -68,7 +68,7 @@
         </Method>
       </Methods>
     </Class>
-    <Class name="Conexion" package="" visibility="public" xPosition="379.0" yPosition="15.0">
+    <Class name="Conexion" package="" visibility="public" xPosition="483.0" yPosition="32.0">
       <Fields>
         <Field name="UML" type="String" visibility="private" isStatic="true" isFinal="true"/>
         <Field name="DB" type="String" visibility="private" isStatic="true" isFinal="true"/>
@@ -82,7 +82,7 @@
         <Method name="getConexion" returnType="Connection" visibility="public" isStatic="true"/>
       </Methods>
     </Class>
-    <Class name="MateriaData" package="" visibility="public" xPosition="657.0" yPosition="226.0">
+    <Class name="MateriaData" package="" visibility="public" xPosition="888.0" yPosition="188.0">
       <Fields>
         <Field name="con" type="Connection" visibility="private"/>
       </Fields>
@@ -111,8 +111,8 @@
   </ClassDiagramComponents>
   <ClassDiagramRelations>
     <UseRelation name="usa una" source="MateriaData" target="Conexion" sourceCardinality="1..1" targetCardinality="1..1"/>
-    <HasRelation name="contiene un" source="InscripcionData" target="AlumnoData" type="Aggregation" sourceCardinality="0..1" targetCardinality="1..1"/>
-    <HasRelation name="contiene una" source="InscripcionData" target="MateriaData" type="Aggregation" sourceCardinality="0..1" targetCardinality="1..1"/>
     <UseRelation name="usa una" source="AlumnoData" target="Conexion" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="contiene una" source="InscripcionData" target="MateriaData" type="Aggregation" sourceCardinality="0..1" targetCardinality="1..1"/>
+    <HasRelation name="contiene un" source="InscripcionData" target="AlumnoData" type="Aggregation" sourceCardinality="0..1" targetCardinality="1..1"/>
   </ClassDiagramRelations>
 </ClassDiagram>

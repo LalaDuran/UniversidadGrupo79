@@ -137,7 +137,6 @@ public class CargaDeNotas extends javax.swing.JInternalFrame {
     private void jbSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSalirActionPerformed
         //Deselecciona, invisibiliza y cierra la ventana
         this.dispose();
-
     }//GEN-LAST:event_jbSalirActionPerformed
 
     private void jcbSeleccionarAlumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbSeleccionarAlumnoActionPerformed
@@ -156,18 +155,15 @@ public class CargaDeNotas extends javax.swing.JInternalFrame {
                 modelo.addRow(new Object[]{insc.getMateria().getIdMateria(), insc.getMateria().getNombre(), insc.getNota()});
             }
         }
-
-
     }//GEN-LAST:event_jcbSeleccionarAlumnoActionPerformed
 
     private void jbGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbGuardarActionPerformed
-
         //Instanciamos para usar luego
         InscripcionData inscData = new InscripcionData();
         Alumno a = new Alumno();
         Materia m = new Materia();
         
-        //Asignamos al alumno instanciado el seleccionado en la vista
+        //Asignamos al alumno instanciado, el seleccionado en la vista
         a = (Alumno) jcbSeleccionarAlumno.getSelectedItem();
         
         //Creamos una variable con la materia seleccionada en la vista
@@ -191,7 +187,6 @@ public class CargaDeNotas extends javax.swing.JInternalFrame {
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(null, "La celda debe contener un número");
         }
-
     }//GEN-LAST:event_jbGuardarActionPerformed
 
 
@@ -206,7 +201,6 @@ public class CargaDeNotas extends javax.swing.JInternalFrame {
     // End of variables declaration//GEN-END:variables
 
     private void armarTabla() {
-
         //Agregamos las cabeceras a la tabla
         modelo.addColumn("Id");
         modelo.addColumn("nombre");
@@ -233,7 +227,6 @@ public class CargaDeNotas extends javax.swing.JInternalFrame {
     }
 
     private void cargarAlumnos() {
-
         //Cargamos los alumnos al jComboBox
         AlumnoData ad = new AlumnoData();
 
@@ -243,7 +236,6 @@ public class CargaDeNotas extends javax.swing.JInternalFrame {
     }
 
     private void borrarFilas() {
-
         //Evita la repetición de las filas en la tabla
         while (modelo.getRowCount() > 0) {
             modelo.removeRow(0);

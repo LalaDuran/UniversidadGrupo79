@@ -258,7 +258,6 @@ public class MenuPrincipal extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     public void cerrar() {
-        
         //Establece los nombre de los dos botones del JOptionPane
         String botones[] = {"Cerrar", "Cancelar"};
         
@@ -269,5 +268,4 @@ public class MenuPrincipal extends javax.swing.JFrame {
             System.exit(0);
         }
     }
-
 }

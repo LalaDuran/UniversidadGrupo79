@@ -34,7 +34,7 @@
         <Method name="toString" returnType="String" visibility="public"/>
       </Methods>
     </Class>
-    <Class name="Inscripcion" package="" visibility="public" xPosition="270.0" yPosition="157.0">
+    <Class name="Inscripcion" package="" visibility="public" xPosition="490.0" yPosition="427.0">
       <Fields>
         <Field name="idInscripcion" type="int" visibility="private"/>
         <Field name="nota" type="double" visibility="private"/>
@@ -60,7 +60,7 @@
         <Method name="toString" returnType="String" visibility="public"/>
       </Methods>
     </Class>
-    <Class name="Materia" package="" visibility="public" xPosition="532.0" yPosition="40.0">
+    <Class name="Materia" package="" visibility="public" xPosition="854.0" yPosition="40.0">
       <Fields>
         <Field name="idMateria" type="int" visibility="private"/>
         <Field name="nombre" type="String" visibility="private"/>

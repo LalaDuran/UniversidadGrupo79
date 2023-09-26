@@ -26,47 +26,38 @@ public class UniversidadGrupo79 {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        
-        
         Connection con = Conexion.getConexion();
-//
- // Alumno juan = new Alumno(12312321,"Bascones", "Jaun",LocalDate.of(2002, Month.SEPTEMBER, 23),true);
-    //     Alumno esteban = new Alumno(12312322,"Lopez", "Esteban",LocalDate.of(2002, Month.SEPTEMBER, 23),true);
+
+        // Alumno juan = new Alumno(12312321,"Bascones", "Jaun",LocalDate.of(2002, Month.SEPTEMBER, 23),true);
+        //     Alumno esteban = new Alumno(12312322,"Lopez", "Esteban",LocalDate.of(2002, Month.SEPTEMBER, 23),true);
         AlumnoData a = new AlumnoData();
- //      a.guardarAlumno(esteban);
-        
-   //     a.modificarAlumno(juan);
-   
-  //      a.eliminarAlumno(2);
-        
-        
-  //      Alumno alumnoEncontrado = a.buscarAlumnoPorDni(22222222);
-  //      System.out.println(alumnoEncontrado.toString());
-    
+        //      a.guardarAlumno(esteban);
+
+        //     a.modificarAlumno(juan);
+        //     a.eliminarAlumno(2);
+        //      Alumno alumnoEncontrado = a.buscarAlumnoPorDni(22222222);
+        //      System.out.println(alumnoEncontrado.toString());
 //          for(Alumno aux: a.listarAlumno()){
 //              System.out.println(aux.toString());
 //          }
 //  
 //  
-        
-    //  Materia fisica = new Materia(5,"fisica 1",1,true);
+        //  Materia fisica = new Materia(5,"fisica 1",1,true);
         MateriaData m = new MateriaData();
-   //     m.guardarMateria(fisica);
+        //     m.guardarMateria(fisica);
         //RECORDAR AGREGAR EL ID PARA MODIFICAR
-   //    m.modificarMateria(fisica);
-  //      m.actualizarMateria(5);
-  
+        //    m.modificarMateria(fisica);
+        //      m.actualizarMateria(5);
+
 //       Materia materiaEncontrada = m.buscarMateria(5);
 //       System.out.println(materiaEncontrada.toString());
 //  
 //        for(Materia aux: m.listarMateria()){
 //            System.out.println(aux.toString());
 //        }
-
-
         //INSCRIPCION PARA ALUMNO YA EXISTENTE
- //       Inscripcion i = new Inscripcion();
-       InscripcionData insc = new InscripcionData();
+        //       Inscripcion i = new Inscripcion();
+        InscripcionData insc = new InscripcionData();
 //        i.setAlumno(a.buscarAlumno(10));
 //        i.setMateria(m.buscarMateria(4));
 //        i.setNota(8.5);
@@ -77,10 +68,8 @@ public class UniversidadGrupo79 {
 //            System.out.println(aux.toString());
 //        }
 
-
 //        insc.actualizarNota(10, 5, 4.2);
 //        insc.borrarInscripcionMateriaAlumno(10, 5);
-        
 //            
 //          for(Materia aux: insc.obtenerMateriasCursadas(1)){
 //              System.out.println(aux.getNombre());
@@ -89,10 +78,9 @@ public class UniversidadGrupo79 {
 //          for(Materia aux: insc.obtenerMateriasNoCursadas(1)){
 //              System.out.println(aux.getNombre());
 //          }
-          
-          for(Alumno aux: insc.obtenerAlumnosPorMateria(3)){
-              System.out.println(aux.getApellido());
-          }
+        for (Alumno aux : insc.obtenerAlumnosPorMateria(3)) {
+            System.out.println(aux.getApellido());
+        }
     }
-    
+
 }

@@ -24,9 +24,7 @@ public class InscripcionData {
         this.con = Conexion.getConexion();
         alumnodata = new AlumnoData();
         materiadata = new MateriaData();
-        
     }
-    
     
     public void guardarInscripcion(Inscripcion ins){
         String sql = "INSERT INTO inscripcion (nota, id_alumno, id_materia)"
@@ -56,12 +54,9 @@ public class InscripcionData {
             //Liberamos recursos
             ps.close();
             
-            
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla inscripcion");
-        }
-        
-        
+        } 
     }
     
     
@@ -79,7 +74,6 @@ public class InscripcionData {
             ResultSet rs = ps.executeQuery();    
                         
             while(rs.next()){
-                
                 //Instanciamos inscripción y seteamos                
                 Inscripcion inscripcion = new Inscripcion();
                 inscripcion.setIdInscripcion(rs.getInt("id_inscripto"));
@@ -98,14 +92,11 @@ public class InscripcionData {
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla");
         } 
-        
-        return inscripciones;
-        
+        return inscripciones;  
     }
     
     
     public List<Inscripcion> obtenerInscripcionesPorAlumno(int id){
-        
         String sql = "SELECT id_inscripto, nota, id_alumno, id_materia FROM inscripcion WHERE id_alumno = ?";
         
         //Instanciamos el arraylist que usaremos luego
@@ -123,7 +114,6 @@ public class InscripcionData {
             
             //ACCEDER A LA BASE DE DATOS DE ALUMNO Y MATERIA Y BUSCARLOS CON EL METODO BUSCAR
             while(rs.next()){
-                
                 //Instanciamos inscripción y seteamos                 
                 Inscripcion inscripcion = new Inscripcion();
                 inscripcion.setIdInscripcion(rs.getInt("id_inscripto"));
@@ -142,15 +132,14 @@ public class InscripcionData {
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla");
         } 
-        
         return inscripciones;  
-    
     }
     
     
     public List<Materia> obtenerMateriasCursadas(int id){
         String sql = "SELECT inscripcion.id_materia, nombre, anio FROM inscripcion, materia "
         + "WHERE inscripcion.id_materia = materia.id_materia AND inscripcion.id_alumno = ?";
+        
         //Instanciamos el arraylist que usaremos luego
         ArrayList<Materia> materias = new ArrayList<>();
         
@@ -181,14 +170,11 @@ public class InscripcionData {
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla");
         }
-        
         return materias;
-    
     }
     
     
-    public List<Materia> obtenerMateriasNoCursadas(int id){
-        
+    public List<Materia> obtenerMateriasNoCursadas(int id){ 
         String sql = "SELECT * FROM materia WHERE estado = 1 AND id_materia not in"
                 + "(SELECT id_materia FROM inscripcion WHERE id_alumno = ?)";
         
@@ -222,14 +208,11 @@ public class InscripcionData {
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla");
         }
-        
         return materias;
-    
     }
     
     
     public void borrarInscripcionMateriaAlumno(int id_alumno, int id_materia){
-    
         String sql = "DELETE FROM inscripcion WHERE id_alumno = ? AND id_materia = ?";
         
         try {
@@ -274,7 +257,6 @@ public class InscripcionData {
             System.out.println(id_materia);
             if(filas == 1){
                 JOptionPane.showMessageDialog(null, "nota actualizada");
-               
             }
             
             //Liberamos recursos
@@ -283,7 +265,6 @@ public class InscripcionData {
         } catch (SQLException ex) {
            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla");
         }
-   
     }
     
     
@@ -322,12 +303,8 @@ public class InscripcionData {
             ps.close();
             
         } catch (SQLException ex) {
-            
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla");        
         }
-        
         return alumnos;
-    
-    }
-    
+    } 
 }

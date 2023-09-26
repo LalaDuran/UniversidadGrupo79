@@ -60,6 +60,4 @@ public class Materia {
     public String toString() {
         return idMateria + " - " + nombre + ", año: " + anio;
     }
-    
-    
 }
