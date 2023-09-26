@@ -20,10 +20,10 @@ public class ListadoAlumnosPorMateria extends javax.swing.JInternalFrame {
 
     public ListadoAlumnosPorMateria() {
         initComponents();
-        
+
         //Carga las materias al jComboBox
         cargarMaterias();
-        
+
         //Carga la estructura de la tabla
         armarTabla();
     }
@@ -192,5 +192,5 @@ public class ListadoAlumnosPorMateria extends javax.swing.JInternalFrame {
         while (modelo.getRowCount() > 0) {
             modelo.removeRow(0);
         }
-    } 
+    }
 }

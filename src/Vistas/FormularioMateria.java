@@ -246,6 +246,8 @@ public class FormularioMateria extends javax.swing.JInternalFrame {
         jtfAño.setText("");
         jtfNombre.setText("");
         jrbEstado.setSelected(false);
+        jbNuevo.setEnabled(false);
+        jbEliminar.setEnabled(false);
     }//GEN-LAST:event_jbNuevoActionPerformed
 
     private void jbGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbGuardarActionPerformed

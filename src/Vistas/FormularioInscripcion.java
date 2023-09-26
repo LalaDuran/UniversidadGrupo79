@@ -6,6 +6,7 @@ import AccesoADatos.MateriaData;
 import Entidades.Alumno;
 import Entidades.Inscripcion;
 import Entidades.Materia;
+import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
@@ -20,13 +21,13 @@ public class FormularioInscripcion extends javax.swing.JInternalFrame {
 
     public FormularioInscripcion() {
         initComponents();
-        
+
         //Carga los alumnos al jComboBox
         cargarAlumnos();
-        
+
         //Carga la estructura de la tabla
         armarTabla();
-        
+
         //Inhabilita los botones 'Anular' e 'Inscribir'
         jbAnularInsc.setEnabled(false);
         jbInscribir.setEnabled(false);
@@ -210,34 +211,34 @@ public class FormularioInscripcion extends javax.swing.JInternalFrame {
             jbAnularInsc.setEnabled(true);
             jbInscribir.setEnabled(false);
         }
-        
+
         //Borramos las filas evitando repeticiones
         borrarFilas();
-        
+
         //Listamos las materias en la tabla
         for (Materia aux : id.obtenerMateriasCursadas(a.getIdAlumno())) {
             modelo.addRow(new Object[]{aux.getIdMateria(), aux.getNombre(), aux.getAnio()});
         }
-        
+
     }//GEN-LAST:event_jrbMatInscriptasActionPerformed
 
     private void jrbMatNOInscriptasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrbMatNOInscriptasActionPerformed
         //Instanciamos inscripcionData para usar luego
         InscripcionData id = new InscripcionData();
-        
+
         //Creamos un alumno y le asignamos el alumno seleccionado en la vista
         Alumno a = (Alumno) jcbSeleccionarAlumno.getSelectedItem();
-        
+
         //Si está seleccionado el botón, habilitamos e inhabilitamos los otros
         if (jrbMatNOInscriptas.isSelected()) {
             jrbMatInscriptas.setSelected(false);
             jbInscribir.setEnabled(true);
             jbAnularInsc.setEnabled(false);
         }
-        
+
         //Borramos las filas evitando repeticiones
         borrarFilas();
-        
+
         //Listamos las materias en la tabla
         for (Materia aux : id.obtenerMateriasNoCursadas(a.getIdAlumno())) {
             modelo.addRow(new Object[]{aux.getIdMateria(), aux.getNombre(), aux.getAnio()});
@@ -251,23 +252,29 @@ public class FormularioInscripcion extends javax.swing.JInternalFrame {
         Inscripcion insc = new Inscripcion();
         Materia m = new Materia();
 
-        //Creamos una variable con la materia seleccionada en la vista
-        int filaSeleccionada = jTablaMaterias.getSelectedRow();
-        
-        //Seteamos los atributos a la materia antes instanciada
-        m.setIdMateria((int) jTablaMaterias.getValueAt(filaSeleccionada, 0));
-        m.setNombre((String) jTablaMaterias.getValueAt(filaSeleccionada, 1));
-        m.setAnio((int) jTablaMaterias.getValueAt(filaSeleccionada, 2));
-        
-        //Le seteamos a inscripción el alumno seleccionado y la materia antes instanciada
-        insc.setAlumno((Alumno) jcbSeleccionarAlumno.getSelectedItem());
-        insc.setMateria(m);
-        
-        //Guardamos la inscripción en BD
-        inscData.guardarInscripcion(insc);
-        
-        //Quitamos la 'fila' de la materia recién inscripta
-        modelo.removeRow(filaSeleccionada);
+        //Si no seleccione ninguna fila corta el proceso
+        if (jTablaMaterias.getSelectedRow() == -1) {
+            JOptionPane.showMessageDialog(null, "Seleccione una fila");
+        } else {
+            //Creamos una variable con la materia seleccionada en la vista
+            int filaSeleccionada = jTablaMaterias.getSelectedRow();
+
+            //Seteamos los atributos a la materia antes instanciada
+            m.setIdMateria((int) jTablaMaterias.getValueAt(filaSeleccionada, 0));
+            m.setNombre((String) jTablaMaterias.getValueAt(filaSeleccionada, 1));
+            m.setAnio((int) jTablaMaterias.getValueAt(filaSeleccionada, 2));
+
+            //Le seteamos a inscripción el alumno seleccionado y la materia antes instanciada
+            insc.setAlumno((Alumno) jcbSeleccionarAlumno.getSelectedItem());
+            insc.setMateria(m);
+
+            //Guardamos la inscripción en BD
+            inscData.guardarInscripcion(insc);
+
+            //Quitamos la 'fila' de la materia recién inscripta
+            modelo.removeRow(filaSeleccionada);
+        }
+
     }//GEN-LAST:event_jbInscribirActionPerformed
 
     private void jbAnularInscActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAnularInscActionPerformed
@@ -275,21 +282,28 @@ public class FormularioInscripcion extends javax.swing.JInternalFrame {
         InscripcionData inscData = new InscripcionData();
         Materia m = new Materia();
         Alumno a = new Alumno();
-        
-        //Creamos una variable con la materia seleccionada en la vista
-        int filaSeleccionada = jTablaMaterias.getSelectedRow();
-        
-        //Le seteamos al alumno antes instanciado el alumno seleccionado en la vista
-        a = (Alumno) jcbSeleccionarAlumno.getSelectedItem();
-        
-        //Le seteamos a la materia antes instanciada el id de la materia seleccionada en la vista
-        m.setIdMateria((int) jTablaMaterias.getValueAt(filaSeleccionada, 0));
-        
-        //Borramos la inscripción en BD
-        inscData.borrarInscripcionMateriaAlumno(a.getIdAlumno(), m.getIdMateria());
-        
-        //Quitamos la 'fila' de la materia cuya inscripción recién borramos
-        modelo.removeRow(filaSeleccionada);
+
+        //Si no seleccione ninguna fila corta el proceso
+        if (jTablaMaterias.getSelectedRow() == -1) {
+            JOptionPane.showMessageDialog(null, "Seleccione una fila");
+        } else {
+
+            //Creamos una variable con la materia seleccionada en la vista
+            int filaSeleccionada = jTablaMaterias.getSelectedRow();
+
+            //Le seteamos al alumno antes instanciado el alumno seleccionado en la vista
+            a = (Alumno) jcbSeleccionarAlumno.getSelectedItem();
+
+            //Le seteamos a la materia antes instanciada el id de la materia seleccionada en la vista
+            m.setIdMateria((int) jTablaMaterias.getValueAt(filaSeleccionada, 0));
+
+            //Borramos la inscripción en BD
+            inscData.borrarInscripcionMateriaAlumno(a.getIdAlumno(), m.getIdMateria());
+
+            //Quitamos la 'fila' de la materia cuya inscripción recién borramos
+            modelo.removeRow(filaSeleccionada);
+        }
+
     }//GEN-LAST:event_jbAnularInscActionPerformed
 
     private void jcbSeleccionarAlumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbSeleccionarAlumnoActionPerformed
@@ -323,13 +337,13 @@ public class FormularioInscripcion extends javax.swing.JInternalFrame {
         modelo.addColumn("id");
         modelo.addColumn("nombre");
         modelo.addColumn("año");
-        
+
         //Seteamos el modelo a la tabla
         jTablaMaterias.setModel(modelo);
-        
+
         //Impedimos el reordenamiento de la cabecera
         jTablaMaterias.getTableHeader().setReorderingAllowed(false);
-        
+
         //para centrar las celdas del encabezado
         DefaultTableCellRenderer header = (DefaultTableCellRenderer) jTablaMaterias.getTableHeader().getDefaultRenderer();
         header.setHorizontalAlignment(SwingConstants.CENTER);
@@ -360,12 +374,4 @@ public class FormularioInscripcion extends javax.swing.JInternalFrame {
         }
     }
 
-    private void cargarMaterias() {
-        //Cargamos las materias a la tabla
-        MateriaData md = new MateriaData();
-
-        for (Materia materia : md.listarMateria()) {
-            modelo.addRow(new Object[]{materia.getIdMateria(), materia.getNombre(), materia.getAnio()});
-        }
-    }
 }

@@ -12,10 +12,11 @@ public class FormularioAlumno extends javax.swing.JInternalFrame {
 
     public FormularioAlumno() {
         initComponents();
-        
+
         //Inhabilita los botones 'Nuevo' y 'Eliminar'
         jbNuevo.setEnabled(false);
         jbEliminar.setEnabled(false);
+
     }
 
     /**
@@ -206,11 +207,11 @@ public class FormularioAlumno extends javax.swing.JInternalFrame {
                 LocalDate localDate = alumnoBuscado.getFechaNacim();
                 //local date + atStartOfDay() + default time zone + toInstant() = Date
                 jdcFechaNac.setDate(Date.from(localDate.atStartOfDay(defaultZoneId).toInstant()));
-                
+
                 //Habilitamos los botones 'Nuevo' y 'Eliminar'
                 jbNuevo.setEnabled(true);
                 jbEliminar.setEnabled(true);
-                
+
             } catch (NumberFormatException nfe) {
                 //si ingresa letras o símbolos
                 JOptionPane.showMessageDialog(this, "Ingrese sólo números");
@@ -229,19 +230,21 @@ public class FormularioAlumno extends javax.swing.JInternalFrame {
         jtfDocumento.setText("");
         jrbEstado.setSelected(false);
         jdcFechaNac.setCalendar(null);
+        jbNuevo.setEnabled(false);
+        jbEliminar.setEnabled(false);
     }//GEN-LAST:event_jbNuevoActionPerformed
 
     private void jbEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEliminarActionPerformed
         //Si el campo Código está vacío
         if (jtfDocumento.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Complete el campo 'Documento'");
-            
+
         } else {
             try {
                 //Instanciamos alumno y alumnoData para usar luego
                 Alumno a = new Alumno();
                 AlumnoData ad = new AlumnoData();
-                
+
                 //Creamos una variable con el documento tipeado en la vista
                 int dni = Integer.parseInt(jtfDocumento.getText());
 
@@ -276,7 +279,7 @@ public class FormularioAlumno extends javax.swing.JInternalFrame {
             Date date = jdcFechaNac.getDate();
             LocalDate ld = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
             boolean estado = jrbEstado.isSelected();
-            
+
             //Instanciamos un alumno con los parámetros anteriores
             Alumno a = new Alumno(dni, apellido, nombre, ld, estado);
 
@@ -299,7 +302,7 @@ public class FormularioAlumno extends javax.swing.JInternalFrame {
             } else {
                 ad.guardarAlumno(a);
             }
-            
+
             //Habilitamos los botones 'Eliminar' y 'Nuevo'
             jbEliminar.setEnabled(true);
             jbNuevo.setEnabled(true);
@@ -309,7 +312,7 @@ public class FormularioAlumno extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, "Complete el campo 'Documento'");
         } catch (NumberFormatException ex) {
             //Si no usa números enteros en Documento
-            JOptionPane.showMessageDialog(null,"Use sólo números enteros para 'Documento'");
+            JOptionPane.showMessageDialog(null, "Use sólo números enteros para 'Documento'");
         }
     }//GEN-LAST:event_jbGuardarActionPerformed
 

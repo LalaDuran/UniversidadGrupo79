@@ -162,31 +162,35 @@ public class CargaDeNotas extends javax.swing.JInternalFrame {
         InscripcionData inscData = new InscripcionData();
         Alumno a = new Alumno();
         Materia m = new Materia();
-        
+
         //Asignamos al alumno instanciado, el seleccionado en la vista
         a = (Alumno) jcbSeleccionarAlumno.getSelectedItem();
-        
-        //Creamos una variable con la materia seleccionada en la vista
-        int filaSeleccionada = jtTablaNotas.getSelectedRow();
 
-        //Seteamos los atributos a la materia antes instanciada
-        m.setIdMateria((int) jtTablaNotas.getValueAt(filaSeleccionada, 0));
+        //Si no selecciona una fila, se le avisa al usuario
+        if (jtTablaNotas.getSelectedRow() == -1) {
+            JOptionPane.showMessageDialog(null, "Seleccione una fila");
+        } else {
+            //Creamos una variable con la materia seleccionada en la vista
+            int filaSeleccionada = jtTablaNotas.getSelectedRow();
+            //Seteamos los atributos a la materia antes instanciada
+            m.setIdMateria((int) jtTablaNotas.getValueAt(filaSeleccionada, 0));
 
-        //Asignamos el valor de la vista en String
-        String valor = jtTablaNotas.getValueAt(filaSeleccionada, 2).toString();
-        
-        //a.toString();
-        
-        try {
-            //Pasamos valor de String a double
-            double d = Double.parseDouble(valor);
-            
-            //Llamamos al método que actualizará la nota
-            inscData.actualizarNota(a.getIdAlumno(), m.getIdMateria(), d);
-            
-        } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(null, "La celda debe contener un número");
+            //Asignamos el valor de la vista en String
+            String valor = jtTablaNotas.getValueAt(filaSeleccionada, 2).toString();
+
+            try {
+                //Pasamos valor de String a double
+                double d = Double.parseDouble(valor);
+
+                //Llamamos al método que actualizará la nota
+                inscData.actualizarNota(a.getIdAlumno(), m.getIdMateria(), d);
+
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(null, "La celda debe contener un número");
+            }
         }
+
+
     }//GEN-LAST:event_jbGuardarActionPerformed
 
 

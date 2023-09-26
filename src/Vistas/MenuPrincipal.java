@@ -1,17 +1,15 @@
-
 package Vistas;
 
 import javax.swing.JOptionPane;
-
 
 public class MenuPrincipal extends javax.swing.JFrame {
 
     public MenuPrincipal() {
         initComponents();
-        
+
         //Abre la ventana del menú en el centro
         this.setLocationRelativeTo(null);
-        
+
         //Impide que se modifique el tamaño de la ventana
         this.setResizable(false);
 
@@ -201,7 +199,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jmiFormularioAlumnoActionPerformed
 
     private void jMenu5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu5MouseClicked
-       //Llama al método para cerrar la aplicación completa
+        //Llama al método para cerrar la aplicación completa
         cerrar();
     }//GEN-LAST:event_jMenu5MouseClicked
 
@@ -260,10 +258,10 @@ public class MenuPrincipal extends javax.swing.JFrame {
     public void cerrar() {
         //Establece los nombre de los dos botones del JOptionPane
         String botones[] = {"Cerrar", "Cancelar"};
-        
+
         //Asigna el JOptionPane a una variable y si elige 'si'...
         int eleccion = JOptionPane.showOptionDialog(this, "¿Desea cerrar la aplicación?", "Salir", 0, 0, null, botones, this);
-        
+
         if (eleccion == JOptionPane.YES_OPTION) {
             System.exit(0);
         }
